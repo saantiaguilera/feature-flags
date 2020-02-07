@@ -1,0 +1,63 @@
+apply plugin: 'com.jfrog.bintray'
+
+def getBintrayUsername() {
+    return properties.get('bintrayUsername', System.getenv('BINTRAY_USERNAME'))
+}
+
+def getBintrayApiKey() {
+    return properties.get('bintrayApiKey',  System.getenv('BINTRAY_KEY'))
+}
+
+def getBintrayGpgPassword() {
+    return properties.get('bintrayGpgPassword', System.getenv('BINTRAY_GPG_PASSWORD'))
+}
+
+def getMavenCentralUsername() {
+    return properties.get('mavenCentralUsername', System.getenv('MAVEN_CENTRAL_USERNAME'))
+}
+
+def getMavenCentralPassword() {
+    return properties.get('mavenCentralPassword', System.getenv('MAVEN_CENTRAL_PASSWORD'))
+}
+
+def shouldSyncWithMavenCentral() {
+    return properties.get('syncWithMavenCentral', false)
+}
+
+def dryRunOnly() {
+    return properties.get('dryRun', false)
+}
+
+bintray {
+    user = getBintrayUsername()
+    key = getBintrayApiKey()
+    publications = ['mavenPublication']
+
+    pkg {
+        repo = bintrayRepo
+        userOrg =  bintrayUserOrg
+        licenses = licenseShortName
+        name = bintrayName
+        desc = bintrayDescription
+        websiteUrl = projectUrl
+        issueTrackerUrl = issuesUrl
+        vcsUrl = scmUrl
+        dryRun = dryRunOnly()
+        override = true
+        publish = true
+        publicDownloadNumbers = true
+        version {
+            desc = bintrayDescription
+            gpg {
+                sign = false
+                passphrase = getBintrayGpgPassword()
+            }
+            mavenCentralSync {
+                sync = shouldSyncWithMavenCentral()
+                user = getMavenCentralUsername()
+                password = getMavenCentralPassword()
+                close = '1'
+            }
+        }
+    }
+}

@@ -2,6 +2,7 @@ apply plugin: 'kotlin'
 apply from: 'javadoc.gradle'
 apply from: 'sca.gradle'
 apply from: 'jacoco.gradle'
+apply from: 'publishing.gradle'
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     kotlinOptions {

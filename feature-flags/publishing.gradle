@@ -1,0 +1,87 @@
+apply plugin: 'maven-publish'
+
+group = 'com.saantiaguilera.featureflags'
+version = '0.0.1'
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayUserOrg = 'saantiaguilera'
+    bintrayName = "$group:$name"
+    bintrayDescription = "Feature Toggles (often also referred to as Feature Flags) Kotlin implementation"
+    projectUrl = 'https://github.com/saantiaguilera/feature-flags'
+    issuesUrl = 'https://github.com/saantiaguilera/feature-flags/issues'
+    scmUrl = 'https://github.com/saantiaguilera/feature-flags.git'
+    scmConnection = 'scm:git:https://github.com/saantiaguilera/feature-flags.git'
+    scmDeveloperConnection = 'scm:git:git@github.com:saantiaguilera/feature-flags.git'
+
+    publishedGroupId = group
+    libraryName = name
+    artifact = name
+
+    developerId = 'saantiaguilera'
+    developerName = 'saantiaguilera'
+
+    licenseShortName = 'GNU-3.0'
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+javadoc.failOnError = false
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+def pomConfig = {
+    licenses {
+        license {
+            name 'The GNU General Public License v3.0'
+            url 'https://www.gnu.org/licenses/gpl-3.0.html'
+            distribution 'repo'
+        }
+    }
+    developers {
+        developer {
+            id developerId
+            name developerName
+        }
+    }
+
+    scm {
+        url scmUrl
+    }
+}
+
+publishing {
+    publications {
+        mavenPublication(MavenPublication) {
+            from components.java
+            artifact sourcesJar {
+                classifier "sources"
+            }
+            artifact javadocJar {
+                classifier "javadoc"
+            }
+            groupId project.group
+            artifactId project.name
+            version project.version
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', project.bintrayDescription)
+                root.appendNode('name', project.name)
+                root.appendNode('url', project.projectUrl)
+                root.children().last() + pomConfig
+            }
+        }
+    }
+}
+
+apply from: 'bintray.gradle'
