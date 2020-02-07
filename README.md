@@ -1,8 +1,8 @@
-# Feature Toggles (aka Feature Flags) in Kotlin
-
-<img width="100"
-align="center" 
-src="https://github.com/kubernetes/kubernetes/raw/master/images/icon.svg" />
+<p align="center">
+    <img width="200" align="center"  src="https://github.com/saantiaguilera/feature-flags/raw/master/images/icon.jpeg" /><br>
+    <br>
+    <b>Feature Toggles (aka Feature Flags) in Kotlin</b>
+</p>
 
 ![Build](https://github.com/saantiaguilera/feature-flags/workflows/Android/badge.svg) [![Coverage](https://codecov.io/gh/saantiaguilera/feature-flags/branch/master/graph/badge.svg)](https://codecov.io/gh/saantiaguilera/feature-flags)
 
@@ -10,7 +10,7 @@ This project is based completely on [Feature Toggles by Martin Fowler](https://m
 
 Feature Toggles (often also referred to as Feature Flags) are a powerful technique, allowing teams to modify system behavior without changing code. They fall into various usage categories, and it's important to take that categorization into account when implementing and managing toggles. Toggles introduce complexity. We can keep that complexity in check by using smart toggle implementation practices and appropriate tools to manage our toggle configuration, but we should also aim to constrain the number of toggles in our system.
 
-The API was heavily inspired by the following contents:
+_The API was heavily inspired by the following contents:_
 - [Feature Toggles by Martin Fowler](https://martinfowler.com/articles/feature-toggles.html)
 - [Go flag package](https://golang.org/pkg/flag/)
 - [Feature flags architecture](https://jeroenmols.com/blog/2019/09/12/featureflagsarchitecture/)
@@ -26,14 +26,7 @@ No proguard / R8 rules needed, this works transparently with it :)
 
 ## Usage
 
-Usage is very diverse, since it can fit most of the developers needs. 
-
-Consider to:
-- Refer to the documentation all around the code for knowing flows and responsibilities.
-- Refer to the testapp to see samples of feature-flags, providers, usages and tests.
-- Refer to the tests to understand what's the desired behaviour of each method / class.
-
-The basics should be:
+Usage is very diverse, since it can fit most of the developers needs. The basics should be:
 
 ### Creating a feature-flag
 
@@ -69,9 +62,7 @@ sealed class HomeFeatureCatalog(
 
 You can find some implemented providers to use as examples under the [testapp directory](testapp/src/test/java/com/saantiaguilera/featureflags/provider)
 
-A provider is in charge of deciding if a given feature-flag is enabled or disabled. It can be through a cache, api-call, shared-preference, or any other strategy. If it doesn't has a requested feature-flag, it should return the default feature value marking it as missing.
-
-Also, an implementation can contain specific states to enrich its behaviours, eg. it can have a `User` to request specific user flags (or have more complex decisions depending on the user's data). it could also use this same `User` to perform AB Testings if it wanted to.
+A provider is in charge of deciding if a given feature-flag is enabled or disabled. It can be through a cache, api-call, shared-preference, or any other strategy. If it doesn't has a requested feature-flag, it should return the default feature value marking it as missing. An implementation can contain any specific states to enrich its behaviours, eg. it can have a `User` to request specific user flags (or have more complex decisions depending on the user's data). It could also use this same `User` to perform AB Testings if it wanted to.
 
 An example of a simple provider implementation using an external service (backend) as a feature-flag storage could be:
 
@@ -108,7 +99,7 @@ You can easily create other types such as:
 
 Since it's just a contract, you can create them with whatever you want to. You can even make them refreshable if you'd like (by creating a `Refreshable` interface and calling it whenever you want to)
 
-All of this can be found under the [testapp directory](testapp/src/test/java/com/saantiaguilera/featureflags/provider)
+All of the above can be found under the [testapp directory](testapp/src/test/java/com/saantiaguilera/featureflags/provider)
 
 #### Priority Providers
 
