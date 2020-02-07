@@ -19,6 +19,7 @@ sealed class FeatureFlagResult(open val exists: Boolean) {
      * Regardless of this operation, the flag might've not been found (and this was a default value)
      */
     sealed class Enabled(override val exists: Boolean) : FeatureFlagResult(exists) {
+
         /**
          * Enabled and existing result. This means it was found by the provider.
          */
@@ -35,6 +36,7 @@ sealed class FeatureFlagResult(open val exists: Boolean) {
      * Regardless of this operation, the flag might've not been found (and this was a default value)
      */
     sealed class Disabled(override val exists: Boolean) : FeatureFlagResult(exists) {
+
         /**
          * Disabled and existing result. This means it was found by the provider.
          */
