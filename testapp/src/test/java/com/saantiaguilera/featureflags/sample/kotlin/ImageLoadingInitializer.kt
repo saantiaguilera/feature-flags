@@ -4,6 +4,7 @@ import android.util.Log
 import com.saantiaguilera.featureflags.FeatureFlagProvider
 import com.saantiaguilera.featureflags.FeatureFlagResult
 import com.saantiaguilera.featureflags.feature.kotlin.FeatureCatalog
+import com.saantiaguilera.featureflags.isEnabled
 
 /**
  * Sample of an image loader initializer to decide how we will operate external images loading into
@@ -25,7 +26,7 @@ class ImageLoadingInitializer(private val featureFlagProvider: FeatureFlagProvid
      * If you want to see a more functional one, see the [Router] sample
      */
     override fun initialize() {
-        val result = featureFlagProvider.isFeatureEnabled(FeatureCatalog.FrescoImages)
+        val result = featureFlagProvider.provide(FeatureCatalog.frescoImages)
 
         if (!result.exists) {
             // Do something? It wasn't at the provider, you may want to log it somewhere
@@ -34,6 +35,12 @@ class ImageLoadingInitializer(private val featureFlagProvider: FeatureFlagProvid
             Log.w("Missing", "Fresco feature isn't at the provider")
         }
 
+        // Both are equally the same:
+        checkByWhen(result)
+        checkByIf(result)
+    }
+
+    fun checkByWhen(result: FeatureFlagResult) {
         when (result) {
             is FeatureFlagResult.Enabled -> {
                 // Initialize with fresco
@@ -41,6 +48,14 @@ class ImageLoadingInitializer(private val featureFlagProvider: FeatureFlagProvid
             is FeatureFlagResult.Disabled -> {
                 // Initialize with picasso
             }
+        }
+    }
+
+    fun checkByIf(result: FeatureFlagResult) {
+        if (result.isEnabled()) {
+            // Initialize with fresco
+        } else {
+            // Initialize with picasso
         }
     }
 

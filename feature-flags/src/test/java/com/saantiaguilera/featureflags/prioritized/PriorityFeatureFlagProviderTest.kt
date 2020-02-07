@@ -14,13 +14,13 @@ class PriorityFeatureFlagProviderTest {
         val provider = PriorityFeatureFlagProvider(
             listOf(
                 object : TestProvider(1) {
-                    override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
+                    override fun provide(feature: FeatureFlag): FeatureFlagResult {
                         called = true // Because of lowest priority, this shouldnt be called.
                         return FeatureFlagResult.Enabled.Existing
                     }
                 },
                 object : TestProvider(100) {
-                    override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
+                    override fun provide(feature: FeatureFlag): FeatureFlagResult {
                         return FeatureFlagResult.Disabled.Existing
                     }
                 }
@@ -28,7 +28,7 @@ class PriorityFeatureFlagProviderTest {
             Comparator { o1, o2 -> o2.priority.compareTo(o1.priority) }
         )
 
-        provider.isFeatureEnabled(FeatureFlag("key", false, "usage"))
+        provider.provide(FeatureFlag("key", false, "usage"))
 
         Assert.assertFalse(called)
     }
@@ -38,12 +38,12 @@ class PriorityFeatureFlagProviderTest {
         val provider = PriorityFeatureFlagProvider(
             listOf(
                 object : TestProvider(1) {
-                    override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
+                    override fun provide(feature: FeatureFlag): FeatureFlagResult {
                         return FeatureFlagResult.Enabled.Existing
                     }
                 },
                 object : TestProvider(100) {
-                    override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
+                    override fun provide(feature: FeatureFlag): FeatureFlagResult {
                         return FeatureFlagResult.Disabled.Existing // This should be used.
                     }
                 }
@@ -51,7 +51,7 @@ class PriorityFeatureFlagProviderTest {
             Comparator { o1, o2 -> o2.priority.compareTo(o1.priority) }
         )
 
-        val result = provider.isFeatureEnabled(FeatureFlag("key", false, "usage"))
+        val result = provider.provide(FeatureFlag("key", false, "usage"))
 
         Assert.assertTrue(result is FeatureFlagResult.Disabled)
         Assert.assertTrue(result.exists)
@@ -62,7 +62,7 @@ class PriorityFeatureFlagProviderTest {
         val provider = PriorityFeatureFlagProvider(
             listOf(
                 object : TestProvider(1) {
-                    override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
+                    override fun provide(feature: FeatureFlag): FeatureFlagResult {
                         if (feature.key == "key") {
                             return FeatureFlagResult.Enabled.Existing
                         }
@@ -70,7 +70,7 @@ class PriorityFeatureFlagProviderTest {
                     }
                 },
                 object : TestProvider(100) {
-                    override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
+                    override fun provide(feature: FeatureFlag): FeatureFlagResult {
                         if (feature.key == "unexpected") {
                             return FeatureFlagResult.Disabled.Existing
                         }
@@ -81,7 +81,7 @@ class PriorityFeatureFlagProviderTest {
             Comparator { o1, o2 -> o2.priority.compareTo(o1.priority) }
         )
 
-        val result = provider.isFeatureEnabled(FeatureFlag("key", false, "usage"))
+        val result = provider.provide(FeatureFlag("key", false, "usage"))
 
         Assert.assertTrue(result is FeatureFlagResult.Enabled)
         Assert.assertTrue(result.exists)
@@ -92,7 +92,7 @@ class PriorityFeatureFlagProviderTest {
         val provider = PriorityFeatureFlagProvider(
             listOf(
                 object : TestProvider(1) {
-                    override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
+                    override fun provide(feature: FeatureFlag): FeatureFlagResult {
                         if (feature.key == "key") {
                             return FeatureFlagResult.Enabled.Existing
                         }
@@ -100,7 +100,7 @@ class PriorityFeatureFlagProviderTest {
                     }
                 },
                 object : TestProvider(100) {
-                    override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
+                    override fun provide(feature: FeatureFlag): FeatureFlagResult {
                         if (feature.key == "key") {
                             return FeatureFlagResult.Disabled.Existing
                         }
@@ -111,7 +111,7 @@ class PriorityFeatureFlagProviderTest {
             Comparator { o1, o2 -> o2.priority.compareTo(o1.priority) }
         )
 
-        val result = provider.isFeatureEnabled(FeatureFlag("unexpected", false, "usage"))
+        val result = provider.provide(FeatureFlag("unexpected", false, "usage"))
 
         Assert.assertTrue(result is FeatureFlagResult.Disabled)
         Assert.assertFalse(result.exists)
@@ -121,12 +121,12 @@ class PriorityFeatureFlagProviderTest {
     fun `Test given a list of providers, when creating and adding another one, then it's not added for security reasons`() {
         val providers = mutableListOf(
             object : TestProvider(1) {
-                override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
+                override fun provide(feature: FeatureFlag): FeatureFlagResult {
                     return FeatureFlagResult.Disabled.Missing
                 }
             },
             object : TestProvider(100) {
-                override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
+                override fun provide(feature: FeatureFlag): FeatureFlagResult {
                     return FeatureFlagResult.Disabled.Missing
                 }
             }
@@ -137,11 +137,11 @@ class PriorityFeatureFlagProviderTest {
         )
 
         providers.add(object : TestProvider(500) {
-            override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
+            override fun provide(feature: FeatureFlag): FeatureFlagResult {
                 return FeatureFlagResult.Enabled.Existing
             }
         })
-        val result = provider.isFeatureEnabled(FeatureFlag("", false, ""))
+        val result = provider.provide(FeatureFlag("", false, ""))
 
         Assert.assertTrue(result is FeatureFlagResult.Disabled)
         Assert.assertFalse(result.exists)

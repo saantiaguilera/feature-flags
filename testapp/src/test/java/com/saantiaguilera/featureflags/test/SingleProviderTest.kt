@@ -25,15 +25,15 @@ class SingleProviderTest {
             override fun getFeatures(): List<Pair<String, Boolean>> {
                 // Here a cache look-up should be performed. Imagine this 3 are the result of an execution.
                 return listOf(
-                    Pair(FeatureCatalog.HorizontalSignIn.key, true),
-                    Pair(FeatureCatalog.Cache2K.key, false)
+                    Pair(FeatureCatalog.horizontalSignIn.key, true),
+                    Pair(FeatureCatalog.cache2K.key, false)
                 )
             }
         })
 
     @Test
     fun `Test getting horizontal sign in is true, because the cache has is as such`() {
-        val result = createProvider().isFeatureEnabled(FeatureCatalog.HorizontalSignIn)
+        val result = createProvider().provide(FeatureCatalog.horizontalSignIn)
 
         Assert.assertTrue(result is FeatureFlagResult.Enabled)
         Assert.assertTrue(result.exists)
@@ -41,7 +41,7 @@ class SingleProviderTest {
 
     @Test
     fun `Test getting cache 2k is false, because the cache has is as such`() {
-        val result = createProvider().isFeatureEnabled(FeatureCatalog.Cache2K)
+        val result = createProvider().provide(FeatureCatalog.cache2K)
 
         Assert.assertTrue(result is FeatureFlagResult.Disabled)
         Assert.assertTrue(result.exists)
@@ -50,7 +50,7 @@ class SingleProviderTest {
 
     @Test
     fun `Test getting visa is false, because that's the default and also it does not exist`() {
-        val result = createProvider().isFeatureEnabled(FeatureCatalog.CardPaymentsWithVisa)
+        val result = createProvider().provide(FeatureCatalog.cardPaymentsWithVisa)
 
         Assert.assertTrue(result is FeatureFlagResult.Disabled)
         Assert.assertFalse(result.exists)

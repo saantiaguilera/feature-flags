@@ -18,12 +18,12 @@ class UserProvider(private val repository: UserRepository,
         refresh()
     }
 
-    override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
+    override fun provide(feature: FeatureFlag): FeatureFlagResult {
         return features.find {
                 it.key == feature.key
             }
-            ?.defaultValue?.let { createExistingResult(it) }
-            ?: createMissingResult(feature.defaultValue)
+            ?.value?.let { createExistingResult(it) }
+            ?: createMissingResult(feature.value)
     }
 
     override fun refresh() {

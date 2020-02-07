@@ -7,13 +7,13 @@ import com.saantiaguilera.featureflags.*
  */
 class CacheProvider(private val repository: CacheRepository) : FeatureFlagProvider {
 
-    override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
+    override fun provide(feature: FeatureFlag): FeatureFlagResult {
         return repository.getFeatures()
             .find {
                 it.first == feature.key
             }
             ?.second?.let { createExistingResult(it) }
-            ?: createMissingResult(feature.defaultValue)
+            ?: createMissingResult(feature.value)
     }
 
 }

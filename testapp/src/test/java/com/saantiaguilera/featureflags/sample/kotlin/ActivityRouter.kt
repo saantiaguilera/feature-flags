@@ -36,7 +36,7 @@ class ActivityRouter(activity: Activity, private val featureFlagProvider: Featur
      * If you want to see a more sealed-class one, see the [ImageLoadingInitializer] sample
      */
     override fun navigateHome() {
-        featureFlagProvider.isFeatureEnabled(FeatureCatalog.HomeV2)
+        featureFlagProvider.provide(FeatureCatalog.homeV2)
             .onEnabled {
                 activityRef.get()?.also {
                     val intent = Intent(it, it::class.java) // Imagine we go here to Home V2

@@ -6,3 +6,5 @@
 
 Create a result that was found, representing a given value.
 
+This is a shortcut to using [Enabled.Existing](-feature-flag-result/-enabled/-existing.md) or [Disabled.Existing](-feature-flag-result/-disabled/-existing.md) depending on the given value
+

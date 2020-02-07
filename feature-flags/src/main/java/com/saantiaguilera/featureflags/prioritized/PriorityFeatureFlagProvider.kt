@@ -3,6 +3,7 @@ package com.saantiaguilera.featureflags.prioritized
 import com.saantiaguilera.featureflags.FeatureFlag
 import com.saantiaguilera.featureflags.FeatureFlagProvider
 import com.saantiaguilera.featureflags.FeatureFlagResult
+import com.saantiaguilera.featureflags.createMissingResult
 
 /**
  * Priority grouping of feature-flag providers.
@@ -24,11 +25,11 @@ class PriorityFeatureFlagProvider<P : FeatureFlagProvider>(
      *
      * If all results are missing types, then the default feature value (missing) will be returned.
      */
-    override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
+    override fun provide(feature: FeatureFlag): FeatureFlagResult {
         return providers
             .asSequence()
-            .map { it.isFeatureEnabled(feature) }
+            .map { it.provide(feature) }
             .firstOrNull { it.exists }
-            ?: feature.toResult()
+            ?: createMissingResult(feature.value)
     }
 }

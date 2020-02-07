@@ -22,7 +22,7 @@ that constructs with a "User" (or know how to retrieve it) and use it.
 
 | Name | Summary |
 |---|---|
-| [isFeatureEnabled](is-feature-enabled.md) | Returns for the given feature a result.`abstract fun isFeatureEnabled(feature: `[`FeatureFlag`](../-feature-flag/index.md)`): `[`FeatureFlagResult`](../-feature-flag-result/index.md) |
+| [provide](provide.md) | Provide for the given feature a result.`abstract fun provide(feature: `[`FeatureFlag`](../-feature-flag/index.md)`): `[`FeatureFlagResult`](../-feature-flag-result/index.md) |
 
 ### Inheritors
 

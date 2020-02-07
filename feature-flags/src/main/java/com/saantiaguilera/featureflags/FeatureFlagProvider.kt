@@ -18,11 +18,11 @@ package com.saantiaguilera.featureflags
 interface FeatureFlagProvider {
 
     /**
-     * Returns for the given feature a result.
+     * Provide for the given feature a result.
      *
      * The result should denote if the feature is [Enabled][FeatureFlagResult.Enabled] or
      * [Disabled][FeatureFlagResult.Disabled]. It should also represent if it was found or not
      * through [FeatureFlagResult.exists].
      */
-    fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult
+    fun provide(feature: FeatureFlag): FeatureFlagResult
 }

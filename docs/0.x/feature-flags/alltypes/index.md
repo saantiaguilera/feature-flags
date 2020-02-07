@@ -10,7 +10,9 @@ A Feature Toggle (aka Feature Flags) Kotlin implementation
 
 ##### [com.saantiaguilera.featureflags.FeatureFlag](../com.saantiaguilera.featureflags/-feature-flag/index.md)
 
-Open class for defining feature flags.
+data class for defining feature flags. The reason it's not an interface is because a
+feature flag shouldn't contain behaviours nor richer state, as it's solely reason of existence
+is to transfer data.
 
 
 |

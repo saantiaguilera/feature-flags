@@ -54,7 +54,7 @@ public class ActivityRouter implements Router {
         final Activity activity = activityRef.get();
 
         if (activity != null) {
-            final FeatureFlagResult result = featureFlagProvider.isFeatureEnabled(FeatureCatalog.HOME_V2);
+            final FeatureFlagResult result = featureFlagProvider.provide(FeatureCatalog.HOME_V2);
 
             FeatureFlagResultExtension.onEnabled(result, enabled -> {
                 final Intent intent = new Intent(activity, Activity.class); // Imagine we go here to Home V2

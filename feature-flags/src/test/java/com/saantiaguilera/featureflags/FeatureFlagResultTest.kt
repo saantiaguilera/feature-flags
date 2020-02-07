@@ -116,4 +116,32 @@ class FeatureFlagResultTest {
 
         Assert.assertFalse(called)
     }
+
+    @Test
+    fun `Test given an existing enabled result, when calling is enabled, then returns true`() {
+        val result = createExistingResult(true)
+
+        Assert.assertTrue(result.isEnabled())
+    }
+
+    @Test
+    fun `Test given a missing existing result, when calling is enabled, then returns true`() {
+        val result = createMissingResult(true)
+
+        Assert.assertTrue(result.isEnabled())
+    }
+
+    @Test
+    fun `Test given an existing disabled result, when calling is enabled, then returns true`() {
+        val result = createExistingResult(false)
+
+        Assert.assertFalse(result.isEnabled())
+    }
+
+    @Test
+    fun `Test given a missing disabled result, when calling is enabled, then returns true`() {
+        val result = createMissingResult(false)
+
+        Assert.assertFalse(result.isEnabled())
+    }
 }

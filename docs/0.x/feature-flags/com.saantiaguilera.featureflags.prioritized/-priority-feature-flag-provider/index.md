@@ -19,4 +19,4 @@ If all results are missing types, then the default feature value (missing) will 
 
 | Name | Summary |
 |---|---|
-| [isFeatureEnabled](is-feature-enabled.md) | Look across all the providers for the given feature.`fun isFeatureEnabled(feature: `[`FeatureFlag`](../../com.saantiaguilera.featureflags/-feature-flag/index.md)`): `[`FeatureFlagResult`](../../com.saantiaguilera.featureflags/-feature-flag-result/index.md) |
+| [provide](provide.md) | Look across all the providers for the given feature.`fun provide(feature: `[`FeatureFlag`](../../com.saantiaguilera.featureflags/-feature-flag/index.md)`): `[`FeatureFlagResult`](../../com.saantiaguilera.featureflags/-feature-flag-result/index.md) |

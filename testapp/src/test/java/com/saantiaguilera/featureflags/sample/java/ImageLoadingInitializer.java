@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.saantiaguilera.featureflags.FeatureFlagProvider;
 import com.saantiaguilera.featureflags.FeatureFlagResult;
+import com.saantiaguilera.featureflags.FeatureFlagResultExtension;
 import com.saantiaguilera.featureflags.feature.java.FeatureCatalog;
 import com.saantiaguilera.featureflags.sample.kotlin.Initializer;
 
@@ -33,7 +34,7 @@ public class ImageLoadingInitializer implements Initializer {
      */
     @Override
     public void initialize() {
-        final FeatureFlagResult result = featureFlagProvider.isFeatureEnabled(FeatureCatalog.FRESCO_IMAGES);
+        final FeatureFlagResult result = featureFlagProvider.provide(FeatureCatalog.FRESCO_IMAGES);
 
         if (!result.getExists()) {
             // Do something? It wasn't at the provider, you may want to log it somewhere
@@ -42,11 +43,9 @@ public class ImageLoadingInitializer implements Initializer {
             Log.w("Missing", "Fresco feature isn't at the provider");
         }
 
-        if (result instanceof FeatureFlagResult.Enabled) {
+        if (FeatureFlagResultExtension.isEnabled(result)) {
             // Initialize with fresco
-        }
-
-        if (result instanceof FeatureFlagResult.Disabled) {
+        } else {
             // Initialize with picasso
         }
     }

@@ -6,3 +6,5 @@
 
 Create a result that wasn't found, representing a given value.
 
+This is a shortcut to using [Enabled.Missing](-feature-flag-result/-enabled/-missing.md) or [Disabled.Missing](-feature-flag-result/-disabled/-missing.md) depending on the given value
+

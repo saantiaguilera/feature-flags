@@ -39,7 +39,7 @@ class PrioritizedProviderTest : AppCompatActivity() {
                         override fun getFeatures(): List<Pair<String, Boolean>> {
                             // Here a cache look-up should be performed. Imagine this 3 are the result of an execution.
                             return listOf(
-                                Pair(FeatureCatalog.HorizontalSignIn.key, true)
+                                Pair(FeatureCatalog.horizontalSignIn.key, true)
                             )
                         }
                     }
@@ -52,14 +52,14 @@ class PrioritizedProviderTest : AppCompatActivity() {
                             // Here a cache look-up should be performed. Imagine this 3 are the result of an execution.
                             return listOf(
                                 FeatureFlag(
-                                    FeatureCatalog.HorizontalSignIn.key,
+                                    FeatureCatalog.horizontalSignIn.key,
                                     false,
-                                    FeatureCatalog.HorizontalSignIn.usage
+                                    FeatureCatalog.horizontalSignIn.usage
                                 ),
                                 FeatureFlag(
-                                    FeatureCatalog.Cache2K.key,
+                                    FeatureCatalog.cache2K.key,
                                     false,
-                                    FeatureCatalog.Cache2K.usage
+                                    FeatureCatalog.cache2K.usage
                                 )
                             )
                         }
@@ -72,7 +72,7 @@ class PrioritizedProviderTest : AppCompatActivity() {
 
     @Test
     fun `Test getting horizontal sign in is true, because ultra high priority goes first and has it true`() {
-        val result = createProvider().isFeatureEnabled(FeatureCatalog.HorizontalSignIn)
+        val result = createProvider().provide(FeatureCatalog.horizontalSignIn)
 
         Assert.assertTrue(result is FeatureFlagResult.Enabled)
         Assert.assertTrue(result.exists)
@@ -80,7 +80,7 @@ class PrioritizedProviderTest : AppCompatActivity() {
 
     @Test
     fun `Test getting cache 2k is false, because the low priority one has it as such`() {
-        val result = createProvider().isFeatureEnabled(FeatureCatalog.Cache2K)
+        val result = createProvider().provide(FeatureCatalog.cache2K)
 
         Assert.assertTrue(result is FeatureFlagResult.Disabled)
         Assert.assertTrue(result.exists)
@@ -88,7 +88,7 @@ class PrioritizedProviderTest : AppCompatActivity() {
 
     @Test
     fun `Test getting visa is false, because none of the providers has it`() {
-        val result = createProvider().isFeatureEnabled(FeatureCatalog.CardPaymentsWithVisa)
+        val result = createProvider().provide(FeatureCatalog.cardPaymentsWithVisa)
 
         Assert.assertTrue(result is FeatureFlagResult.Disabled)
         Assert.assertFalse(result.exists)

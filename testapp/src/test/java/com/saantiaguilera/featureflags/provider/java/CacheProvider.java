@@ -22,13 +22,13 @@ public class CacheProvider implements FeatureFlagProvider {
 
     @NotNull
     @Override
-    public FeatureFlagResult isFeatureEnabled(@NotNull final FeatureFlag feature) {
+    public FeatureFlagResult provide(@NotNull final FeatureFlag feature) {
         return repository.getFeatures()
                 .stream()
                 .filter(pair -> pair.getFirst().contentEquals(feature.getKey()))
                 .map(pair -> FeatureFlagResultExtension.createExistingResult(pair.getSecond()))
                 .findFirst()
-                .orElseGet(() -> FeatureFlagResultExtension.createMissingResult(feature.getDefaultValue()));
+                .orElseGet(() -> FeatureFlagResultExtension.createMissingResult(feature.getValue()));
     }
 
 }

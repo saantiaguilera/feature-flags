@@ -20,7 +20,7 @@ class FirebaseFeatureFlagProvider() : FeatureFlagProvider,
         remoteConfig.setConfigSettingsAsync(configSettings)
     }
 
-    override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
+    override fun provide(feature: FeatureFlag): FeatureFlagResult {
         // We are not handling missing cases here.
         return createExistingResult(remoteConfig.getBoolean(feature.key))
     }

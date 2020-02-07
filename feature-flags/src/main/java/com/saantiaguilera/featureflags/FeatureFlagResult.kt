@@ -72,13 +72,30 @@ private fun create(value: Boolean, available: Boolean): FeatureFlagResult {
 
 /**
  * Create a result that was found, representing a given value.
+ *
+ * This is a shortcut to using [Enabled.Existing] or [Disabled.Existing] depending on the given value
  */
 fun createExistingResult(value: Boolean): FeatureFlagResult = create(value, true)
 
 /**
  * Create a result that wasn't found, representing a given value.
+ *
+ * This is a shortcut to using [Enabled.Missing] or [Disabled.Missing] depending on the given value
  */
 fun createMissingResult(value: Boolean): FeatureFlagResult = create(value, false)
+
+/**
+ * Convenience method for checking if the feature is enabled, regardless of missing / existing
+ * in the provider.
+ */
+@UseExperimental(ExperimentalContracts::class)
+fun FeatureFlagResult.isEnabled(): Boolean {
+    contract {
+        returns(true) implies(this@isEnabled is Enabled)
+        returns(false) implies(this@isEnabled is Disabled)
+    }
+    return this is Enabled
+}
 
 /**
  * Performs the given [action] if this instance represents [disable][FeatureFlagResult.Disabled].
@@ -89,7 +106,7 @@ inline fun FeatureFlagResult.onDisabled(action: (result: Disabled) -> Unit): Fea
     contract {
         callsInPlace(action, InvocationKind.AT_MOST_ONCE)
     }
-    if (this is Disabled) {
+    if (!this.isEnabled()) {
         action(this)
     }
     return this
@@ -104,7 +121,7 @@ inline fun FeatureFlagResult.onEnabled(action: (result: Enabled) -> Unit): Featu
     contract {
         callsInPlace(action, InvocationKind.AT_MOST_ONCE)
     }
-    if (this is Enabled) {
+    if (this.isEnabled()) {
         action(this)
     }
     return this
