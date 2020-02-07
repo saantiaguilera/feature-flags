@@ -20,7 +20,7 @@ jacoco {
 jacocoTestReport {
     reports {
         xml.enabled true
-        xml.destination file("${buildDir}/reports/jacoco/xml")
+        xml.destination file("${buildDir}/reports/jacoco/xml/report.xml")
 
         csv.enabled false
 
