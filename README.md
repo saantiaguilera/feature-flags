@@ -4,14 +4,14 @@ This project is based completely on [Feature Toggles by Martin Fowler](https://m
 
 Feature Toggles (often also refered to as Feature Flags) are a powerful technique, allowing teams to modify system behavior without changing code. They fall into various usage categories, and it's important to take that categorization into account when implementing and managing toggles. Toggles introduce complexity. We can keep that complexity in check by using smart toggle implementation practices and appropriate tools to manage our toggle configuration, but we should also aim to constrain the number of toggles in our system.
 
-This project has taken input from a lot of diverse sources. To mention some:
+The API was heavily inspired by the following contents:
 - [Feature Toggles by Martin Fowler](https://martinfowler.com/articles/feature-toggles.html)
-- [Go flag pkg](https://golang.org/pkg/flag/)
+- [Go flag package](https://golang.org/pkg/flag/)
 - [Feature flags architecture](https://jeroenmols.com/blog/2019/09/12/featureflagsarchitecture/)
 
 ## Set Up
 
-This project uses sem-ver. You can find the latest stable version under the Github Releases tab.
+We are using sem-ver. You can find the latest stable version under the Github Releases tab.
 ```gradle
 implementation "com.saantiaguilera.featureflags:feature-flags:<version>"
 ```
@@ -20,8 +20,8 @@ implementation "com.saantiaguilera.featureflags:feature-flags:<version>"
 
 Usage is very diverse, since it can fit most of the developers needs. 
 
-Please:
-- Refer to the documentation all around the code for knowing flows and responsibilities
+Consider to:
+- Refer to the documentation all around the code for knowing flows and responsibilities.
 - Refer to the testapp to see samples of feature-flags, providers, usages and tests.
 - Refer to the tests to understand what's the desired behaviour of each method / class.
 
@@ -63,7 +63,7 @@ You can find some implemented providers to use as examples under the [testapp di
 
 A provider is in charge of deciding if a given feature-flag is enabled or disabled. It can be through a cache, api-call, shared-preference, or any other strategy. If it doesn't has a requested feature-flag, it should return the default feature value marking it as missing.
 
-A provider implementation can contain specific states to enrich its behaviours, eg. it can have a `User` to request specific user flags (or have more complex decisions depending on the user's data). it could also use this same `User` to perform AB Testings if it wanted to.
+Also, an implementation can contain specific states to enrich its behaviours, eg. it can have a `User` to request specific user flags (or have more complex decisions depending on the user's data). it could also use this same `User` to perform AB Testings if it wanted to.
 
 An example of a simple provider implementation using an external service (backend) as a feature-flag storage could be:
 
@@ -100,7 +100,7 @@ You can easily create other types such as:
 
 Since it's just a contract, you can create them with whatever you want to. You can even make them refreshable if you'd like (by creating a `Refreshable` interface and calling it whenever you want to)
 
-All of this can be found in the [testapp directory](testapp/src/test/java/com/saantiaguilera/featureflags/provider)
+All of this can be found under the [testapp directory](testapp/src/test/java/com/saantiaguilera/featureflags/provider)
 
 #### Priority Providers
 
@@ -110,7 +110,7 @@ You can find an example of usage under the [testapp directory](testapp/src/test/
 
 ### Consuming a provider
 
-Once you already have your providers and feature-flags. You can start using them anywhere.
+Once you have your providers and feature-flags. You can start using them anywhere.
 
 #### Sealed-class usage
 ```kotlin
