@@ -70,7 +70,7 @@ class RepositoryProvider(private val repository: RepositoryApi) : FeatureFlagPro
         features = repository.getFeatures()
     }
 
-    override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
+    override fun provide(feature: FeatureFlag): FeatureFlagResult {
         return features.find {
                 it.first == feature.key // We try finding the same requested feature in our features
             }
@@ -106,12 +106,13 @@ Once you have your providers and feature-flags. You can start using them anywher
 #### Sealed-class usage
 ```kotlin
 fun navigateHome(featureFlagProvider: FeatureFlagProvider) {
-    val result = featureFlagProvider.isFeatureEnabled(FeatureCatalog.HomeV2)
+    val result = featureFlagProvider.provide(FeatureCatalog.HomeV2)
 
     if (!result.exists) {
         // Do something? It wasn't at the provider, you may want to log it somewhere
         // so you get notice of it.
-        // Don't worry though, the default feature value will still be used so it's bug free
+        // Don't worry though, the default feature value will still be used by the result so 
+        // it's safe to switch afterwards
     }
 
     when (result) {
@@ -127,7 +128,7 @@ fun navigateHome(featureFlagProvider: FeatureFlagProvider) {
 #### Functional usage
 ```kotlin
 fun navigateHome(featureFlagProvider: FeatureFlagProvider) {
-    featureFlagProvider.isFeatureEnabled(FeatureCatalog.HomeV2)
+    featureFlagProvider.provide(FeatureCatalog.HomeV2)
         .onEnabled {
             // Navigate to home v2
         }
@@ -144,12 +145,13 @@ fun navigateHome(featureFlagProvider: FeatureFlagProvider) {
 #### If usage
 ```kotlin
 fun navigateHome(featureFlagProvider: FeatureFlagProvider) {
-    val result = featureFlagProvider.isFeatureEnabled(FeatureCatalog.HomeV2)
+    val result = featureFlagProvider.provide(FeatureCatalog.HomeV2)
 
     if (!result.exists) {
         // Do something? It wasn't at the provider, you may want to log it somewhere
         // so you get notice of it.
-        // Don't worry though, the default feature value will still be used so it's bug free
+        // Don't worry though, the default feature value will still be used afterwards
+        // for checking if it's enabled
     }
 
     if (result.isEnabled()) {
