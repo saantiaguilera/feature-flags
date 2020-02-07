@@ -12,9 +12,6 @@ dokka {
         if (project.file('Module.md').exists()) {
             includes = ['Module.md']
         }
-        externalDocumentationLink {
-            url = new URL("https://github.com/saantiaguilera/feature-flags")
-        }
         sourceLink {
             path = "src/main/java"
             url = "https://github.com/saantiaguilera/feature-flags"
