@@ -74,7 +74,7 @@ An example of a simple provider implementation using an external service (backen
 ```kotlin
 class RepositoryProvider(private val repository: RepositoryApi) : FeatureFlagProvider {
 
-    // Your API returns String:Boolean pairs denoting a feature's key and if it's enabled or not.
+    // This API sample returns String:Boolean pairs denoting a feature's key and if it's enabled or not.
     // Eg: Pair("feature.home.new_design_v2", true)
     private var features: List<Pair<String, Boolean>> = emptyList()
 

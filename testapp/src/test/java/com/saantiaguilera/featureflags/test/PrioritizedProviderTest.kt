@@ -86,7 +86,6 @@ class PrioritizedProviderTest : AppCompatActivity() {
         Assert.assertTrue(result.exists)
     }
 
-
     @Test
     fun `Test getting visa is false, because none of the providers has it`() {
         val result = createProvider().isFeatureEnabled(FeatureCatalog.CardPaymentsWithVisa)
