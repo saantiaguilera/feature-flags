@@ -27,8 +27,8 @@ jacocoTestReport {
 
 test {
     jacoco {
-        destinationFile = file("$buildDir/reports/jacoco/jacocoTest.exec")
-        classDumpDir = file("$buildDir/reports/jacoco/classpathdumps")
+        destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
+        classDumpDir = file("$buildDir/jacoco/classpathdumps")
     }
 }
 
