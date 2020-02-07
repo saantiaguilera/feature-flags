@@ -2,13 +2,18 @@ buildscript {
     repositories {
         google()
         jcenter()
+        gradlePluginPortal()
     }
 
     dependencies {
         apply from: 'dependencies.gradle'
 
-        classpath "com.android.tools.build:gradle:$androidToolsBuildGradleVersion"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath plugin.androidBuildTools
+        classpath plugin.kotlin
+        classpath plugin.dokka
+        classpath plugin.sca
+        classpath plugin.detekt
+        classpath plugin.ktlint
     }
 }
 
@@ -17,6 +22,11 @@ allprojects {
     repositories {
         google()
         jcenter()
+    }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+        options.incremental = true
     }
 }
 

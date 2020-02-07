@@ -1,4 +1,4 @@
-package com.saantiaguilera.featureflags.feature
+package com.saantiaguilera.featureflags.feature.kotlin
 
 import com.saantiaguilera.featureflags.FeatureFlag
 

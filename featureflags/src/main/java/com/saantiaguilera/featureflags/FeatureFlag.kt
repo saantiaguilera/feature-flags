@@ -1,5 +1,7 @@
 package com.saantiaguilera.featureflags
 
+import java.io.Serializable
+
 /**
  * Open class for defining feature flags.
  *
@@ -8,7 +10,7 @@ package com.saantiaguilera.featureflags
  *
  * This definition is based on the [flag](https://golang.org/pkg/flag) package definition.
  */
-open class FeatureFlag(val key: String, val defaultValue: Boolean, val usage: String) {
+open class FeatureFlag(val key: String, val defaultValue: Boolean, val usage: String) : Serializable {
 
     /**
      * Convert the default value to a result.
@@ -22,5 +24,4 @@ open class FeatureFlag(val key: String, val defaultValue: Boolean, val usage: St
             FeatureFlagResult.Disabled.Missing
         }
     }
-
 }

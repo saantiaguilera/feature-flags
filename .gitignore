@@ -1,5 +1,7 @@
 *.iml
 .gradle
+javadoc/
+dokka/
 /local.properties
 /.idea/
 /.idea/caches

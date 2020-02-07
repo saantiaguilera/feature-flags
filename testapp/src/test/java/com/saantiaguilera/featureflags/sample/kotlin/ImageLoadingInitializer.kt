@@ -1,9 +1,9 @@
-package com.saantiaguilera.featureflags.sample
+package com.saantiaguilera.featureflags.sample.kotlin
 
 import android.util.Log
 import com.saantiaguilera.featureflags.FeatureFlagProvider
 import com.saantiaguilera.featureflags.FeatureFlagResult
-import com.saantiaguilera.featureflags.feature.FeatureCatalog
+import com.saantiaguilera.featureflags.feature.kotlin.FeatureCatalog
 
 /**
  * Sample of an image loader initializer to decide how we will operate external images loading into
@@ -16,7 +16,8 @@ import com.saantiaguilera.featureflags.feature.FeatureCatalog
  * provider it thinks so (eg. a repository one because it's decided by a backend service) or it will
  * obtain us through injection (eg. koin / dagger / etc).
  */
-class ImageLoadingInitializer(private val featureFlagProvider: FeatureFlagProvider): Initializer {
+class ImageLoadingInitializer(private val featureFlagProvider: FeatureFlagProvider):
+    Initializer {
 
     /**
      * This sample uses a sealed-class operation approach.

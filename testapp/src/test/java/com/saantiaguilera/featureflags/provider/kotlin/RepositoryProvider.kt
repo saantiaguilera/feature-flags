@@ -1,14 +1,15 @@
-package com.saantiaguilera.featureflags.provider
+package com.saantiaguilera.featureflags.provider.kotlin
 
 import com.saantiaguilera.featureflags.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 /**
- * Provider based on a user. Maybe some features aren't global and apply based on a user's info
+ * Basic provider that will fetch async features at the start and query them.
+ * By no means use this is production code. It's just for example purposes.
  */
-class UserProvider(private val repository: UserRepository,
-                   var user: User) : FeatureFlagProvider, Refreshable {
+class RepositoryProvider(private val repository: Repository) : FeatureFlagProvider,
+    Refreshable {
 
     private var features: List<FeatureFlag> = emptyList()
 
@@ -26,19 +27,26 @@ class UserProvider(private val repository: UserRepository,
 
     override fun refresh() {
         GlobalScope.launch {
-            features = repository.getFeatures(user)
+            features = repository.getFeatures()
         }
     }
 
 }
 
-data class User(val id: Int, val name: String)
+/**
+ * Since it's not queried every time, we allow refreshes.
+ */
+interface Refreshable {
+
+    fun refresh()
+
+}
 
 /**
- * This could be an api-call / cache / db query / etc.
+ * This could be a db / api-call / whatever.
  */
-interface UserRepository {
+interface Repository {
 
-    fun getFeatures(user: User): List<FeatureFlag>
+    suspend fun getFeatures(): List<FeatureFlag>
 
 }

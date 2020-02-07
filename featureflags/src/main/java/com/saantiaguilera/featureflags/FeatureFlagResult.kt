@@ -1,3 +1,4 @@
+@file:JvmName("FeatureFlagResultExtension")
 package com.saantiaguilera.featureflags
 
 import com.saantiaguilera.featureflags.FeatureFlagResult.Disabled
@@ -53,7 +54,7 @@ sealed class FeatureFlagResult(open val exists: Boolean) {
  * Create a result from a given value and availability.
  * This is for internal purposes
  */
-internal fun create(value: Boolean, available: Boolean): FeatureFlagResult {
+private fun create(value: Boolean, available: Boolean): FeatureFlagResult {
     return if (value) {
         if (available) {
             Enabled.Existing

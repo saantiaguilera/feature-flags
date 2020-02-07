@@ -2,9 +2,9 @@ package com.saantiaguilera.featureflags.test
 
 import com.saantiaguilera.featureflags.FeatureFlagProvider
 import com.saantiaguilera.featureflags.FeatureFlagResult
-import com.saantiaguilera.featureflags.feature.FeatureCatalog
-import com.saantiaguilera.featureflags.provider.CacheProvider
-import com.saantiaguilera.featureflags.provider.CacheRepository
+import com.saantiaguilera.featureflags.feature.kotlin.FeatureCatalog
+import com.saantiaguilera.featureflags.provider.kotlin.CacheProvider
+import com.saantiaguilera.featureflags.provider.kotlin.CacheRepository
 import org.junit.Assert
 import org.junit.Test
 
@@ -19,7 +19,9 @@ class SingleProviderTest {
      * When using it, consider minimally injecting providers from a decoupled place (either with
      * a DI framework, or by your own hand)
      */
-    private val provider: FeatureFlagProvider = CacheProvider(object : CacheRepository {
+    private val provider: FeatureFlagProvider =
+        CacheProvider(object :
+            CacheRepository {
             override fun getFeatures(): List<Pair<String, Boolean>> {
                 // Here a cache look-up should be performed. Imagine this 3 are the result of an execution.
                 return listOf(

@@ -1,4 +1,4 @@
-package com.saantiaguilera.featureflags.provider
+package com.saantiaguilera.featureflags.provider.kotlin
 
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
@@ -10,7 +10,8 @@ import com.saantiaguilera.featureflags.createExistingResult
 /**
  * Basic firebase feature flag provider
  */
-class FirebaseFeatureFlagProvider() : FeatureFlagProvider, Refreshable {
+class FirebaseFeatureFlagProvider() : FeatureFlagProvider,
+    Refreshable {
 
     private val remoteConfig: FirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
 

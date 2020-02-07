@@ -1,6 +1,8 @@
 package com.saantiaguilera.featureflags.prioritized
 
-import com.saantiaguilera.featureflags.*
+import com.saantiaguilera.featureflags.FeatureFlag
+import com.saantiaguilera.featureflags.FeatureFlagProvider
+import com.saantiaguilera.featureflags.FeatureFlagResult
 import org.junit.Assert
 import org.junit.Test
 
@@ -21,7 +23,6 @@ class PriorityFeatureFlagProviderTest {
                     override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
                         return FeatureFlagResult.Disabled.Existing
                     }
-
                 }
             ),
             Comparator { o1, o2 -> o2.priority.compareTo(o1.priority) }
@@ -45,7 +46,6 @@ class PriorityFeatureFlagProviderTest {
                     override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
                         return FeatureFlagResult.Disabled.Existing // This should be used.
                     }
-
                 }
             ),
             Comparator { o1, o2 -> o2.priority.compareTo(o1.priority) }
@@ -76,7 +76,6 @@ class PriorityFeatureFlagProviderTest {
                         }
                         return FeatureFlagResult.Disabled.Missing
                     }
-
                 }
             ),
             Comparator { o1, o2 -> o2.priority.compareTo(o1.priority) }
@@ -107,7 +106,6 @@ class PriorityFeatureFlagProviderTest {
                         }
                         return FeatureFlagResult.Disabled.Missing
                     }
-
                 }
             ),
             Comparator { o1, o2 -> o2.priority.compareTo(o1.priority) }
@@ -119,6 +117,35 @@ class PriorityFeatureFlagProviderTest {
         Assert.assertFalse(result.exists)
     }
 
-    abstract class TestProvider(val priority: Int) : FeatureFlagProvider
+    @Test
+    fun `Test given a list of providers, when creating and adding another one, then it's not added for security reasons`() {
+        val providers = mutableListOf(
+            object : TestProvider(1) {
+                override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
+                    return FeatureFlagResult.Disabled.Missing
+                }
+            },
+            object : TestProvider(100) {
+                override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
+                    return FeatureFlagResult.Disabled.Missing
+                }
+            }
+        )
+        val provider = PriorityFeatureFlagProvider(
+            providers,
+            Comparator { o1, o2 -> o2.priority.compareTo(o1.priority) }
+        )
 
+        providers.add(object : TestProvider(500) {
+            override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
+                return FeatureFlagResult.Enabled.Existing
+            }
+        })
+        val result = provider.isFeatureEnabled(FeatureFlag("", false, ""))
+
+        Assert.assertTrue(result is FeatureFlagResult.Disabled)
+        Assert.assertFalse(result.exists)
+    }
+
+    abstract class TestProvider(val priority: Int) : FeatureFlagProvider
 }

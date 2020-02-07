@@ -1,10 +1,10 @@
-package com.saantiaguilera.featureflags.sample
+package com.saantiaguilera.featureflags.sample.kotlin
 
 import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import com.saantiaguilera.featureflags.FeatureFlagProvider
-import com.saantiaguilera.featureflags.feature.FeatureCatalog
+import com.saantiaguilera.featureflags.feature.kotlin.FeatureCatalog
 import com.saantiaguilera.featureflags.onDisabled
 import com.saantiaguilera.featureflags.onEnabled
 import com.saantiaguilera.featureflags.onMissing
@@ -21,7 +21,8 @@ import java.lang.ref.WeakReference
  * The activity will either create us, providing the most suitable provider it thinks so (eg. a repository one because it's
  * decided by a backend service) or it will obtain us through injection (eg. using dagger / koin / whatever).
  */
-class ActivityRouter(activity: Activity, private val featureFlagProvider: FeatureFlagProvider) : Router {
+class ActivityRouter(activity: Activity, private val featureFlagProvider: FeatureFlagProvider) :
+    Router {
 
     private val activityRef = WeakReference(activity)
 

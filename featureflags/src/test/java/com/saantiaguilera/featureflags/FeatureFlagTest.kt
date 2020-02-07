@@ -31,5 +31,4 @@ class FeatureFlagTest {
 
         Assert.assertFalse(result.exists)
     }
-
 }

@@ -4,9 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.saantiaguilera.featureflags.FeatureFlag
 import com.saantiaguilera.featureflags.FeatureFlagProvider
 import com.saantiaguilera.featureflags.FeatureFlagResult
-import com.saantiaguilera.featureflags.feature.FeatureCatalog
+import com.saantiaguilera.featureflags.feature.kotlin.FeatureCatalog
 import com.saantiaguilera.featureflags.prioritized.PriorityFeatureFlagProvider
-import com.saantiaguilera.featureflags.provider.*
+import com.saantiaguilera.featureflags.provider.kotlin.*
 import org.junit.Assert
 import org.junit.Test
 
@@ -33,23 +33,40 @@ class PrioritizedProviderTest : AppCompatActivity() {
      */
     private fun getProviders(): List<StaticPriorityProvider> {
         return listOf(
-            StaticPriorityProvider(CacheProvider(object : CacheRepository {
-                override fun getFeatures(): List<Pair<String, Boolean>> {
-                    // Here a cache look-up should be performed. Imagine this 3 are the result of an execution.
-                    return listOf(
-                        Pair(FeatureCatalog.HorizontalSignIn.key, true)
-                    )
-                }
-            }), 100),
-            StaticPriorityProvider(RepositoryProvider(object : Repository {
-                override suspend fun getFeatures(): List<FeatureFlag> {
-                    // Here a cache look-up should be performed. Imagine this 3 are the result of an execution.
-                    return listOf(
-                        FeatureFlag(FeatureCatalog.HorizontalSignIn.key, false, FeatureCatalog.HorizontalSignIn.usage),
-                        FeatureFlag(FeatureCatalog.Cache2K.key, false, FeatureCatalog.Cache2K.usage)
-                    )
-                }
-            }), 1)
+            StaticPriorityProvider(CacheProvider(
+                    object :
+                        CacheRepository {
+                        override fun getFeatures(): List<Pair<String, Boolean>> {
+                            // Here a cache look-up should be performed. Imagine this 3 are the result of an execution.
+                            return listOf(
+                                Pair(FeatureCatalog.HorizontalSignIn.key, true)
+                            )
+                        }
+                    }
+                ),
+                100
+            ),
+            StaticPriorityProvider(RepositoryProvider(
+                    object : Repository {
+                        override suspend fun getFeatures(): List<FeatureFlag> {
+                            // Here a cache look-up should be performed. Imagine this 3 are the result of an execution.
+                            return listOf(
+                                FeatureFlag(
+                                    FeatureCatalog.HorizontalSignIn.key,
+                                    false,
+                                    FeatureCatalog.HorizontalSignIn.usage
+                                ),
+                                FeatureFlag(
+                                    FeatureCatalog.Cache2K.key,
+                                    false,
+                                    FeatureCatalog.Cache2K.usage
+                                )
+                            )
+                        }
+                    }
+                ),
+                1
+            )
         )
     }
 
