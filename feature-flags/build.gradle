@@ -19,9 +19,13 @@ jacoco {
 
 jacocoTestReport {
     reports {
-        csv.enabled false
-        html.destination file("${buildDir}/reports/jacoco/html")
+        xml.enabled true
         xml.destination file("${buildDir}/reports/jacoco/xml")
+
+        csv.enabled false
+
+        html.enabled true
+        html.destination file("${buildDir}/reports/jacoco/html")
     }
 }
 
