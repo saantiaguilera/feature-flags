@@ -3,6 +3,7 @@ package com.saantiaguilera.featureflags.provider.kotlin
 import com.saantiaguilera.featureflags.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 /**
  * Basic provider that will fetch async features at the start and query them.
@@ -26,7 +27,8 @@ class RepositoryProvider(private val repository: Repository) : FeatureFlagProvid
     }
 
     override fun refresh() {
-        GlobalScope.launch {
+        // In production, consider doing something more UI/UX friendly
+        runBlocking {
             features = repository.getFeatures()
         }
     }

@@ -34,7 +34,7 @@ android {
 }
 
 dependencies {
-    implementation project(":featureflags")
+    implementation project(":feature-flags")
 
     implementation kotlin.stdlib
     implementation kotlin.coroutines

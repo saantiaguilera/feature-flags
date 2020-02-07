@@ -1,0 +1,17 @@
+apply plugin: 'kotlin'
+apply from: 'javadoc.gradle'
+apply from: 'sca.gradle'
+apply from: 'jacoco.gradle'
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+        freeCompilerArgs += "-Xuse-experimental=kotlin.Experimental"
+    }
+}
+
+dependencies {
+    implementation kotlin.stdlib
+
+    testImplementation test.junit
+}
