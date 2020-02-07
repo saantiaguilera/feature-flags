@@ -16,6 +16,8 @@ We are using sem-ver. You can find the latest stable version under the Github Re
 implementation "com.saantiaguilera.featureflags:feature-flags:<version>"
 ```
 
+No proguard / R8 rules needed, this works transparently with it :)
+
 ## Usage
 
 Usage is very diverse, since it can fit most of the developers needs. 
