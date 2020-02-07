@@ -1,0 +1,13 @@
+apply plugin: 'org.jetbrains.dokka'
+
+dokka {
+    outputFormat = "html"
+    outputDirectory = "$rootDir/dokka"
+    configuration {
+        sourceLink {
+            path = "src/main/java"
+            url = "https://github.com/saantiaguilera/feature-flags"
+            lineSuffix = "#L"
+        }
+    }
+}
