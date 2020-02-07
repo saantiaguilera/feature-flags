@@ -36,20 +36,17 @@ If you have a completely modular app, you may probably want a finite number of c
 
 #### Single feature
 ```kotlin
-object FrescoImages : FeatureCatalog("feature.home.fresco_images", true, "Enables fresco API for loading images")
+val frescoImages = FeatureFlag("feature.home.fresco_images", true, "Enables fresco API for loading images")
 ```
 
 #### Catalog features
 ```kotlin
-sealed class HomeFeatureCatalog(
-    key: String,
-    value: Boolean,
-    usage: String
-) : FeatureFlag(key, value, usage) {
-    object HomeV2 : FeatureCatalog("feature.home.new_design_v2", false, "Shows the newly designed Home V2")
-    object GridElements : FeatureCatalog("feature.home.grid_elements", false, "Shows the elements as a grid instead of cards")
-    object FrescoImages : FeatureCatalog("feature.home.fresco_images", true, "Enables fresco API for loading images")
-    object Cache2K : FeatureCatalog("feature.home.cache_2k", false, "Enables cache 2K for caching the home API results")
+object FeatureCatalog {
+    val homeV2 = FeatureFlag("feature.home.new_design_v2", false, "Shows the newly designed Home V2")
+    val horizontalSignIn = FeatureFlag("feature.login.horizontal_sign_in", false, "Shows the horizontal sign in modal")
+    val frescoImages = FeatureFlag("feature.home.fresco_images", true, "Enables fresco API for loading images")
+    val cache2K = FeatureFlag("feature.arch.cache_2k", false, "Enables cache 2K for something")
+    val cardPaymentsWithVisa = FeatureFlag("feature.checkout.card_payments_visa", false, "Enables card payments with VISA")
 }
 ```
 
@@ -142,6 +139,24 @@ fun navigateHome(featureFlagProvider: FeatureFlagProvider) {
             // so you get notice of it.
             // Don't worry though, the default feature value will still be executed so it's bug free
         }
+}
+```
+#### If usage
+```kotlin
+fun navigateHome(featureFlagProvider: FeatureFlagProvider) {
+    val result = featureFlagProvider.isFeatureEnabled(FeatureCatalog.HomeV2)
+
+    if (!result.exists) {
+        // Do something? It wasn't at the provider, you may want to log it somewhere
+        // so you get notice of it.
+        // Don't worry though, the default feature value will still be used so it's bug free
+    }
+
+    if (result.isEnabled()) {
+        // Navigate to home v2
+    } else {
+        // Navigate to home v1
+    }
 }
 ```
 
