@@ -1,2 +1,1 @@
-include ':featureflags', ':testapp'
-rootProject.name = "feature-flags"
+include ':feature-flags', ':testapp'

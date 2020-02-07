@@ -21,7 +21,7 @@ class PrioritizedProviderTest : AppCompatActivity() {
      * When using it, consider minimally injecting providers from a decoupled place (either with
      * a DI framework, or by your own hand)
      */
-    private val provider: FeatureFlagProvider = PriorityFeatureFlagProvider(
+    private fun createProvider(): FeatureFlagProvider = PriorityFeatureFlagProvider(
         getProviders(),
         StaticPriorityComparator()
     )
@@ -72,7 +72,7 @@ class PrioritizedProviderTest : AppCompatActivity() {
 
     @Test
     fun `Test getting horizontal sign in is true, because ultra high priority goes first and has it true`() {
-        val result = provider.isFeatureEnabled(FeatureCatalog.HorizontalSignIn)
+        val result = createProvider().isFeatureEnabled(FeatureCatalog.HorizontalSignIn)
 
         Assert.assertTrue(result is FeatureFlagResult.Enabled)
         Assert.assertTrue(result.exists)
@@ -80,16 +80,15 @@ class PrioritizedProviderTest : AppCompatActivity() {
 
     @Test
     fun `Test getting cache 2k is false, because the low priority one has it as such`() {
-        val result = provider.isFeatureEnabled(FeatureCatalog.Cache2K)
+        val result = createProvider().isFeatureEnabled(FeatureCatalog.Cache2K)
 
         Assert.assertTrue(result is FeatureFlagResult.Disabled)
         Assert.assertTrue(result.exists)
     }
 
-
     @Test
     fun `Test getting visa is false, because none of the providers has it`() {
-        val result = provider.isFeatureEnabled(FeatureCatalog.CardPaymentsWithVisa)
+        val result = createProvider().isFeatureEnabled(FeatureCatalog.CardPaymentsWithVisa)
 
         Assert.assertTrue(result is FeatureFlagResult.Disabled)
         Assert.assertFalse(result.exists)

@@ -1,5 +1,7 @@
 # Feature Toggles (aka Feature Flags) in Kotlin
 
+![Build](https://github.com/saantiaguilera/feature-flags/workflows/Android/badge.svg) [![Coverage](https://codecov.io/gh/saantiaguilera/feature-flags/branch/master/graph/badge.svg)](https://codecov.io/gh/saantiaguilera/feature-flags)
+
 This project is based completely on [Feature Toggles by Martin Fowler](https://martinfowler.com/articles/feature-toggles.html), it's available for any JVM environment
 
 Feature Toggles (often also referred to as Feature Flags) are a powerful technique, allowing teams to modify system behavior without changing code. They fall into various usage categories, and it's important to take that categorization into account when implementing and managing toggles. Toggles introduce complexity. We can keep that complexity in check by using smart toggle implementation practices and appropriate tools to manage our toggle configuration, but we should also aim to constrain the number of toggles in our system.
@@ -72,7 +74,7 @@ An example of a simple provider implementation using an external service (backen
 ```kotlin
 class RepositoryProvider(private val repository: RepositoryApi) : FeatureFlagProvider {
 
-    // Your API returns String:Boolean pairs denoting a feature's key and if it's enabled or not.
+    // This API sample returns String:Boolean pairs denoting a feature's key and if it's enabled or not.
     // Eg: Pair("feature.home.new_design_v2", true)
     private var features: List<Pair<String, Boolean>> = emptyList()
 
