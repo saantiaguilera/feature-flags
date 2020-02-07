@@ -1,5 +1,5 @@
 <p align="center">
-    <img width="200" align="center"  src="https://github.com/saantiaguilera/feature-flags/raw/master/images/icon.jpeg" /><br>
+    <img width="175" align="center"  src="https://github.com/saantiaguilera/feature-flags/raw/master/images/icon.jpeg" /><br>
     <br>
     <b>Feature Toggles (aka Feature Flags) in Kotlin</b>
 </p>
@@ -8,12 +8,7 @@
 
 This project is based completely on [Feature Toggles by Martin Fowler](https://martinfowler.com/articles/feature-toggles.html), it's available for any JVM environment
 
-Feature Toggles (often also referred to as Feature Flags) are a powerful technique, allowing teams to modify system behavior without changing code. They fall into various usage categories, and it's important to take that categorization into account when implementing and managing toggles. Toggles introduce complexity. We can keep that complexity in check by using smart toggle implementation practices and appropriate tools to manage our toggle configuration, but we should also aim to constrain the number of toggles in our system.
-
-_The API was heavily inspired by the following contents:_
-- [Feature Toggles by Martin Fowler](https://martinfowler.com/articles/feature-toggles.html)
-- [Go flag package](https://golang.org/pkg/flag/)
-- [Feature flags architecture](https://jeroenmols.com/blog/2019/09/12/featureflagsarchitecture/)
+_Feature Toggles (often also referred to as Feature Flags) are a powerful technique, allowing teams to modify system behavior without changing code. They fall into various usage categories, and it's important to take that categorization into account when implementing and managing toggles. Toggles introduce complexity. We can keep that complexity in check by using smart toggle implementation practices and appropriate tools to manage our toggle configuration, but we should also aim to constrain the number of toggles in our system._
 
 ## Set Up
 
@@ -149,3 +144,10 @@ fun navigateHome(featureFlagProvider: FeatureFlagProvider) {
         }
 }
 ```
+
+### Mentions
+
+The API was heavily inspired by the following contents:
+- [Feature Toggles by Martin Fowler](https://martinfowler.com/articles/feature-toggles.html)
+- [Go flag package](https://golang.org/pkg/flag/)
+- [Feature flags architecture](https://jeroenmols.com/blog/2019/09/12/featureflagsarchitecture/)
