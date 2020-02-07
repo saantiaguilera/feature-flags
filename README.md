@@ -2,12 +2,7 @@
 
 This project is based completely on [Feature Toggles by Martin Fowler](https://martinfowler.com/articles/feature-toggles.html)
 
-Feature Toggles (often also refered to as Feature Flags) are a powerful technique, allowing teams 
-to modify system behavior without changing code. They fall into various usage categories, and it's 
-important to take that categorization into account when implementing and managing toggles. 
-Toggles introduce complexity. We can keep that complexity in check by using smart toggle 
-implementation practices and appropriate tools to manage our toggle configuration, but we should 
-also aim to constrain the number of toggles in our system.
+Feature Toggles (often also refered to as Feature Flags) are a powerful technique, allowing teams to modify system behavior without changing code. They fall into various usage categories, and it's important to take that categorization into account when implementing and managing toggles. Toggles introduce complexity. We can keep that complexity in check by using smart toggle implementation practices and appropriate tools to manage our toggle configuration, but we should also aim to constrain the number of toggles in our system.
 
 This project has taken input from a lot of diverse sources. To mention some:
 - [Feature Toggles by Martin Fowler](https://martinfowler.com/articles/feature-toggles.html)
@@ -66,13 +61,9 @@ sealed class HomeFeatureCatalog(
 
 You can find some implemented providers to use as examples under the [testapp directory](testapp/src/test/java/com/saantiaguilera/featureflags/provider)
 
-A provider is in charge of deciding if a given feature-flag is enabled or disabled. It can be
-through a cache, api-call, shared-preference, or any other strategy. If it doesn't has a requested feature-flag,
-it should return the default feature value marking it as missing.
+A provider is in charge of deciding if a given feature-flag is enabled or disabled. It can be through a cache, api-call, shared-preference, or any other strategy. If it doesn't has a requested feature-flag, it should return the default feature value marking it as missing.
 
-A provider implementation can contain specific states to enrich its behaviours, eg. it can have a `User` to request
-specific user flags (or have more complex decisions depending on the user's data). it could also use this same `User`
-to perform AB Testings if it wanted to.
+A provider implementation can contain specific states to enrich its behaviours, eg. it can have a `User` to request specific user flags (or have more complex decisions depending on the user's data). it could also use this same `User` to perform AB Testings if it wanted to.
 
 An example of a simple provider implementation using an external service (backend) as a feature-flag storage could be:
 
@@ -107,16 +98,13 @@ You can easily create other types such as:
 - AB Testing providers
 - Mock providers (for testing or debug builds)
 
-Since it's just a contract, you can create them with whatever you want to. You can even make them
-refreshable if you'd like (by creating a `Refreshable` interface and calling it whenever you want to)
+Since it's just a contract, you can create them with whatever you want to. You can even make them refreshable if you'd like (by creating a `Refreshable` interface and calling it whenever you want to)
 
 All of this can be found in the [testapp directory](testapp/src/test/java/com/saantiaguilera/featureflags/provider)
 
 #### Priority Providers
 
-If you wish to have provider groupings, we provide by default a `PriorityFeatureFlagProvider` that
-groups providers and through a `Comparator` you can decide the priority in which a key will be looked
-up.
+If you wish to have provider groupings, we provide by default a `PriorityFeatureFlagProvider` that groups providers and through a `Comparator` you can decide the priority in which a key will be looked up.
 
 You can find an example of usage under the [testapp directory](testapp/src/test/java/com/saantiaguilera/featureflags/provider) or in the tests.
 
