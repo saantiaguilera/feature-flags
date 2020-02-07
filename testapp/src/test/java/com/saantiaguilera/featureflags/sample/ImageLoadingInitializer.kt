@@ -1,11 +1,9 @@
 package com.saantiaguilera.featureflags.sample
 
-import android.app.Activity
-import android.content.Intent
 import android.util.Log
-import com.saantiaguilera.featureflags.*
+import com.saantiaguilera.featureflags.FeatureFlagProvider
+import com.saantiaguilera.featureflags.FeatureFlagResult
 import com.saantiaguilera.featureflags.feature.FeatureCatalog
-import java.lang.ref.WeakReference
 
 /**
  * Sample of an image loader initializer to decide how we will operate external images loading into

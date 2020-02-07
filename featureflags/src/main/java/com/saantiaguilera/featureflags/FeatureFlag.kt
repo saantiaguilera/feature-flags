@@ -16,7 +16,11 @@ open class FeatureFlag(val key: String, val defaultValue: Boolean, val usage: St
      * This method is for internal usage.
      */
     internal fun toResult(): FeatureFlagResult {
-        return createMissingResult(defaultValue)
+        return if (defaultValue) {
+            FeatureFlagResult.Enabled.Missing
+        } else {
+            FeatureFlagResult.Disabled.Missing
+        }
     }
 
 }

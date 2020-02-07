@@ -14,12 +14,12 @@ class PriorityFeatureFlagProviderTest {
                 object : TestProvider(1) {
                     override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
                         called = true // Because of lowest priority, this shouldnt be called.
-                        return createExistingResult(true)
+                        return FeatureFlagResult.Enabled.Existing
                     }
                 },
                 object : TestProvider(100) {
                     override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
-                        return createExistingResult(false)
+                        return FeatureFlagResult.Disabled.Existing
                     }
 
                 }
@@ -38,12 +38,12 @@ class PriorityFeatureFlagProviderTest {
             listOf(
                 object : TestProvider(1) {
                     override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
-                        return createExistingResult(true)
+                        return FeatureFlagResult.Enabled.Existing
                     }
                 },
                 object : TestProvider(100) {
                     override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
-                        return createExistingResult(false) // This should be used.
+                        return FeatureFlagResult.Disabled.Existing // This should be used.
                     }
 
                 }
@@ -64,17 +64,17 @@ class PriorityFeatureFlagProviderTest {
                 object : TestProvider(1) {
                     override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
                         if (feature.key == "key") {
-                            return createExistingResult(true)
+                            return FeatureFlagResult.Enabled.Existing
                         }
-                        return createMissingResult(false)
+                        return FeatureFlagResult.Disabled.Missing
                     }
                 },
                 object : TestProvider(100) {
                     override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
                         if (feature.key == "unexpected") {
-                            return createExistingResult(false)
+                            return FeatureFlagResult.Disabled.Existing
                         }
-                        return createMissingResult(false)
+                        return FeatureFlagResult.Disabled.Missing
                     }
 
                 }
@@ -95,17 +95,17 @@ class PriorityFeatureFlagProviderTest {
                 object : TestProvider(1) {
                     override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
                         if (feature.key == "key") {
-                            return createExistingResult(true)
+                            return FeatureFlagResult.Enabled.Existing
                         }
-                        return createMissingResult(false)
+                        return FeatureFlagResult.Disabled.Missing
                     }
                 },
                 object : TestProvider(100) {
                     override fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult {
                         if (feature.key == "key") {
-                            return createExistingResult(false)
+                            return FeatureFlagResult.Disabled.Existing
                         }
-                        return createMissingResult(false)
+                        return FeatureFlagResult.Disabled.Missing
                     }
 
                 }

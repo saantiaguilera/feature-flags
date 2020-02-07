@@ -1,5 +1,7 @@
 package com.saantiaguilera.featureflags
 
+import com.saantiaguilera.featureflags.FeatureFlagResult.Disabled
+import com.saantiaguilera.featureflags.FeatureFlagResult.Enabled
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -16,13 +18,33 @@ sealed class FeatureFlagResult(open val exists: Boolean) {
      * Enabled result means the flag is enabled.
      * Regardless of this operation, the flag might've not been found (and this was a default value)
      */
-    data class Enabled(override val exists: Boolean) : FeatureFlagResult(exists)
+    sealed class Enabled(override val exists: Boolean) : FeatureFlagResult(exists) {
+        /**
+         * Enabled and existing result. This means it was found by the provider.
+         */
+        object Existing : Enabled(true)
+
+        /**
+         * Enabled and missing result. This means it wasn't found by the provider
+         */
+        object Missing : Enabled(false)
+    }
 
     /**
      * Disabled result means the flag is disabled.
      * Regardless of this operation, the flag might've not been found (and this was a default value)
      */
-    data class Disabled(override val exists: Boolean) : FeatureFlagResult(exists)
+    sealed class Disabled(override val exists: Boolean) : FeatureFlagResult(exists) {
+        /**
+         * Disabled and existing result. This means it was found by the provider.
+         */
+        object Existing : Disabled(true)
+
+        /**
+         * Disabled and missing result. This means it wasn't found by the provider
+         */
+        object Missing : Disabled(false)
+    }
 }
 
 /**
@@ -30,9 +52,18 @@ sealed class FeatureFlagResult(open val exists: Boolean) {
  * This is for internal purposes
  */
 internal fun create(value: Boolean, available: Boolean): FeatureFlagResult {
-    return when (value) {
-        true -> FeatureFlagResult.Enabled(available)
-        false -> FeatureFlagResult.Disabled(available)
+    return if (value) {
+        if (available) {
+            Enabled.Existing
+        } else {
+            Enabled.Missing
+        }
+    } else {
+        if (available) {
+            Disabled.Existing
+        } else {
+            Disabled.Missing
+        }
     }
 }
 
@@ -51,11 +82,11 @@ fun createMissingResult(value: Boolean): FeatureFlagResult = create(value, false
  * Returns the original `FeatureFlagResult` unchanged.
  */
 @UseExperimental(ExperimentalContracts::class)
-inline fun FeatureFlagResult.onDisabled(action: (result: FeatureFlagResult.Disabled) -> Unit): FeatureFlagResult {
+inline fun FeatureFlagResult.onDisabled(action: (result: Disabled) -> Unit): FeatureFlagResult {
     contract {
         callsInPlace(action, InvocationKind.AT_MOST_ONCE)
     }
-    if (this is FeatureFlagResult.Disabled) {
+    if (this is Disabled) {
         action(this)
     }
     return this
@@ -66,11 +97,11 @@ inline fun FeatureFlagResult.onDisabled(action: (result: FeatureFlagResult.Disab
  * Returns the original `FeatureFlagResult` unchanged.
  */
 @UseExperimental(ExperimentalContracts::class)
-inline fun FeatureFlagResult.onEnabled(action: (result: FeatureFlagResult.Enabled) -> Unit): FeatureFlagResult {
+inline fun FeatureFlagResult.onEnabled(action: (result: Enabled) -> Unit): FeatureFlagResult {
     contract {
         callsInPlace(action, InvocationKind.AT_MOST_ONCE)
     }
-    if (this is FeatureFlagResult.Enabled) {
+    if (this is Enabled) {
         action(this)
     }
     return this

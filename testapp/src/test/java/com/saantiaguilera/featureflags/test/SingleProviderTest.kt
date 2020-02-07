@@ -1,6 +1,5 @@
 package com.saantiaguilera.featureflags.test
 
-import com.saantiaguilera.featureflags.FeatureFlag
 import com.saantiaguilera.featureflags.FeatureFlagProvider
 import com.saantiaguilera.featureflags.FeatureFlagResult
 import com.saantiaguilera.featureflags.feature.FeatureCatalog

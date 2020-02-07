@@ -23,11 +23,6 @@ interface FeatureFlagProvider {
      * The result should denote if the feature is [Enabled][FeatureFlagResult.Enabled] or
      * [Disabled][FeatureFlagResult.Disabled]. It should also represent if it was found or not
      * through [FeatureFlagResult.exists].
-     *
-     * For creating results, consider using:
-     * - [createExistingResult] for creating a result in case you found the feature.
-     * - [createMissingResult] for creating a result in case you didn't find the feature.
-     * You can also create them manually if none of the above fit your needs.
      */
     fun isFeatureEnabled(feature: FeatureFlag): FeatureFlagResult
 }

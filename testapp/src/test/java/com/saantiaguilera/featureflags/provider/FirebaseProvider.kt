@@ -2,7 +2,10 @@ package com.saantiaguilera.featureflags.provider
 
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
-import com.saantiaguilera.featureflags.*
+import com.saantiaguilera.featureflags.FeatureFlag
+import com.saantiaguilera.featureflags.FeatureFlagProvider
+import com.saantiaguilera.featureflags.FeatureFlagResult
+import com.saantiaguilera.featureflags.createExistingResult
 
 /**
  * Basic firebase feature flag provider
