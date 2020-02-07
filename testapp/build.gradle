@@ -1,0 +1,39 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion androidCompileSdkVersion
+
+    defaultConfig {
+        minSdkVersion androidCompileSdkVersion
+        targetSdkVersion androidCompileSdkVersion
+
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    resourcePrefix 'feature_flags_samples_'
+
+    dexOptions.preDexLibraries = true
+}
+
+dependencies {
+    implementation project(":featureflags")
+
+    implementation kotlin.stdlib
+    implementation kotlin.coroutines
+
+    implementation support.core
+    implementation support.appCompat
+
+    implementation firebase.remoteConfig
+
+    testImplementation test.junit
+}

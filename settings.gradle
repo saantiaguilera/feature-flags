@@ -1,0 +1,2 @@
+include ':featureflags', ':testapp'
+rootProject.name = "feature-flags"
