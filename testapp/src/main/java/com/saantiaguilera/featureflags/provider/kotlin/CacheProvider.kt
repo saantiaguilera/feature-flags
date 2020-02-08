@@ -8,11 +8,8 @@ import com.saantiaguilera.featureflags.*
 class CacheProvider(private val repository: CacheRepository) : FeatureFlagProvider {
 
     override fun provide(feature: FeatureFlag): FeatureFlagResult {
-        return repository.getFeatures()
-            .find {
-                it.first == feature.key
-            }
-            ?.second?.let { createExistingResult(it) }
+        return repository.getFeatures()[feature.key]
+            ?.let { createExistingResult(it) }
             ?: createMissingResult(feature.value)
     }
 
@@ -24,6 +21,6 @@ class CacheProvider(private val repository: CacheRepository) : FeatureFlagProvid
  */
 interface CacheRepository {
 
-    fun getFeatures(): List<Pair<String, Boolean>>
+    fun getFeatures(): Map<String, Boolean>
 
 }

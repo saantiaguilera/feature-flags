@@ -52,7 +52,7 @@ object FeatureCatalog {
 
 ### Creating a provider
 
-You can find some implemented providers to use as examples under the [testapp directory](testapp/src/test/java/com/saantiaguilera/featureflags/provider)
+You can find some implemented providers to use as examples under the [testapp directory](testapp/src/main/java/com/saantiaguilera/featureflags)
 
 A provider is in charge of deciding if a given feature-flag is enabled or disabled. It can be through a cache, api-call, shared-preference, or any other strategy. If it doesn't has a requested feature-flag, it should return the default feature value marking it as missing. An implementation can contain any specific states to enrich its behaviours, eg. it can have a `User` to request specific user flags (or have more complex decisions depending on the user's data). It could also use this same `User` to perform AB Testings if it wanted to.
 
@@ -61,9 +61,9 @@ An example of a simple provider implementation using an external service (backen
 ```kotlin
 class RepositoryProvider(private val repository: RepositoryApi) : FeatureFlagProvider {
 
-    // This API sample returns String:Boolean pairs denoting a feature's key and if it's enabled or not.
-    // Eg: Pair("feature.home.new_design_v2", true)
-    private var features: List<Pair<String, Boolean>> = emptyList()
+    // This API sample returns a map of String:Boolean denoting a feature's key and if it's enabled or not.
+    // Eg: "feature.home.new_design_v2": true
+    private var features: Map<String, Boolean> = emptyMap()
 
     init {
         // Consider doing it in another thread or coroutine ;)
@@ -71,11 +71,9 @@ class RepositoryProvider(private val repository: RepositoryApi) : FeatureFlagPro
     }
 
     override fun provide(feature: FeatureFlag): FeatureFlagResult {
-        return features.find {
-                it.first == feature.key // We try finding the same requested feature in our features
-            }
-            ?.second?.let { createExistingResult(it) } // If found, we return an existing result with it's value
-            ?: createMissingResult(feature.defaultValue) // If not, we return the default value
+        return repository.getFeatures()[feature.key]
+            ?.let { createExistingResult(it) } // If not null, we return an existing result with it's value 
+            ?: createMissingResult(feature.value) // If null we return the default value
     }
 }
 ```
@@ -91,13 +89,13 @@ You can easily create other types such as:
 
 Since it's just a contract, you can create them with whatever you want to. You can even make them refreshable if you'd like (by creating a `Refreshable` interface and calling it whenever you want to)
 
-All of the above can be found under the [testapp directory](testapp/src/test/java/com/saantiaguilera/featureflags/provider)
+All of the above can be found under the [testapp directory](testapp/src/main/java/com/saantiaguilera/featureflags)
 
 #### Priority Providers
 
 If you wish to have provider groupings, we provide by default a `PriorityFeatureFlagProvider` that groups providers and through a `Comparator` you can decide the priority in which a key will be looked up.
 
-You can find an example of usage under the [testapp directory](testapp/src/test/java/com/saantiaguilera/featureflags/provider) or in the tests.
+You can find an example of usage under the [testapp directory](testapp/src/main/java/com/saantiaguilera/featureflags) or in the tests.
 
 ### Consuming a provider
 

@@ -36,10 +36,10 @@ class PrioritizedProviderTest : AppCompatActivity() {
             StaticPriorityProvider(CacheProvider(
                     object :
                         CacheRepository {
-                        override fun getFeatures(): List<Pair<String, Boolean>> {
+                        override fun getFeatures(): Map<String, Boolean> {
                             // Here a cache look-up should be performed. Imagine this 3 are the result of an execution.
-                            return listOf(
-                                Pair(FeatureCatalog.horizontalSignIn.key, true)
+                            return mapOf(
+                                FeatureCatalog.horizontalSignIn.key to true
                             )
                         }
                     }

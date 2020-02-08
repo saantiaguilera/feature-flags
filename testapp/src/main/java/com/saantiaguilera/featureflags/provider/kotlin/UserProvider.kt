@@ -5,7 +5,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 /**
- * Provider based on a user. Maybe some features aren't global and apply based on a user's info
+ * Provider based on a user. Maybe some features aren't global and apply based on a user's info.
+ * You could even do an AB Testing in the repository based on the user's data.
  */
 class UserProvider(private val repository: UserRepository,
                    var user: User
