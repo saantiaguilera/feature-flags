@@ -20,8 +20,7 @@ class SingleProviderTest {
      * a DI framework, or by your own hand)
      */
     private fun createProvider(): FeatureFlagProvider =
-        CacheProvider(object :
-            CacheRepository {
+        CacheProvider(object : CacheRepository {
             override fun getFeatures(): Map<String, Boolean> {
                 // Here a cache look-up should be performed. Imagine this 3 are the result of an execution.
                 return mapOf(

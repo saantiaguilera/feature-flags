@@ -8,8 +8,7 @@ import com.saantiaguilera.featureflags.FeatureFlagProvider
 class StaticPriorityProvider(
     private val provider: FeatureFlagProvider,
     override val priority: Int
-) : FeatureFlagProvider by provider,
-    StaticPriority
+) : FeatureFlagProvider by provider, StaticPriority
 
 /**
  * Simple interface for denoting a static numbered priority

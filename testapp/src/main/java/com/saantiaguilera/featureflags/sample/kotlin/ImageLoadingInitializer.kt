@@ -4,7 +4,6 @@ import android.util.Log
 import com.saantiaguilera.featureflags.FeatureFlagProvider
 import com.saantiaguilera.featureflags.FeatureFlagResult
 import com.saantiaguilera.featureflags.feature.kotlin.FeatureCatalog
-import com.saantiaguilera.featureflags.isEnabled
 
 /**
  * Sample of an image loader initializer to decide how we will operate external images loading into
@@ -52,7 +51,7 @@ class ImageLoadingInitializer(private val featureFlagProvider: FeatureFlagProvid
     }
 
     fun checkByIf(result: FeatureFlagResult) {
-        if (result.isEnabled()) {
+        if (result.enabled) {
             // Initialize with fresco
         } else {
             // Initialize with picasso

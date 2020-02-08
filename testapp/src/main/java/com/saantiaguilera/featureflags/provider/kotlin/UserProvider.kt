@@ -23,8 +23,8 @@ class UserProvider(private val repository: UserRepository,
         return features.find {
                 it.key == feature.key
             }
-            ?.value?.let { createExistingResult(it) }
-            ?: createMissingResult(feature.value)
+            ?.value?.let { FeatureFlagResult.create(it) }
+            ?: FeatureFlagResult.create(feature.value, exists = false)
     }
 
     override fun refresh() {

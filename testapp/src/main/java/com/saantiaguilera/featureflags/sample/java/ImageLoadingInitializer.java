@@ -36,14 +36,14 @@ public class ImageLoadingInitializer implements Initializer {
     public void initialize() {
         final FeatureFlagResult result = featureFlagProvider.provide(FeatureCatalog.FRESCO_IMAGES);
 
-        if (!result.getExists()) {
+        if (!result.exists()) {
             // Do something? It wasn't at the provider, you may want to log it somewhere
             // so you get notice of it.
             // Don't worry though, the default feature value will still be used so it's bug free
             Log.w("Missing", "Fresco feature isn't at the provider");
         }
 
-        if (FeatureFlagResultExtension.isEnabled(result)) {
+        if (result.enabled()) {
             // Initialize with fresco
         } else {
             // Initialize with picasso

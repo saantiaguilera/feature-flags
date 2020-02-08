@@ -34,8 +34,7 @@ class PrioritizedProviderTest : AppCompatActivity() {
     private fun getProviders(): List<StaticPriorityProvider> {
         return listOf(
             StaticPriorityProvider(CacheProvider(
-                    object :
-                        CacheRepository {
+                    object : CacheRepository {
                         override fun getFeatures(): Map<String, Boolean> {
                             // Here a cache look-up should be performed. Imagine this 3 are the result of an execution.
                             return mapOf(
