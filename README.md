@@ -133,7 +133,7 @@ fun navigateHome(featureFlagProvider: FeatureFlagProvider) {
 fun navigateHome(featureFlagProvider: FeatureFlagProvider) {
     val result = featureFlagProvider.provide(FeatureCatalog.HomeV2)
 
-    if (result.isEnabled()) {
+    if (result.enabled) {
         // Navigate to home v2
     } else {
         // Navigate to home v1
@@ -182,7 +182,7 @@ at the provider can easily be achieved with a sealed-class or a `Boolean?`.
 
 On a side note, it looks more neat to just ask once for something.
 
-#### Why isn't just a Boolean or Boolean? the result, instead of a sealed class
+#### Why isn't just a `Boolean` or `Boolean?` the result, instead of a sealed class
 
 While seeing the requirements we saw that there were chances our servers didn't have a flag (because
 of developers mistakes or accessing different scopes). We wanted to know about this edge cases,
