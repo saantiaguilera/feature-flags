@@ -12,10 +12,10 @@ class SharedPreferencesProvider(context: Context) : FeatureFlagProvider {
 
     override fun provide(feature: FeatureFlag): FeatureFlagResult {
         if (!sharedPreference.contains(feature.key)) {
-            return createMissingResult(feature.value)
+            return FeatureFlagResult.create(feature.value, exists = false)
         }
 
-        return createExistingResult(sharedPreference.getBoolean(feature.key, feature.value))
+        return FeatureFlagResult.create(sharedPreference.getBoolean(feature.key, feature.value))
     }
 
 }

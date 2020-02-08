@@ -3,10 +3,19 @@ package com.saantiaguilera.featureflags
 import java.io.Serializable
 
 /**
- * data class for defining feature flags. The reason it's not an interface is because a
- * feature flag shouldn't contain behaviours nor richer state, as it's solely reason of existence
- * is to transfer data.
+ * Simple data class for defining feature flags.
  *
  * This definition is based on the [flag](https://golang.org/pkg/flag) package definition.
+ *
+ * Example:
+ * ```
+ * object PaymentsFeatureCatalog {
+ *     val enableVisaPayments = FeatureFlag(
+ *         "feature.payments.cards.visa",
+ *         false,
+ *         "Denotes the user should be able to make payments using VISA cards"
+ *     )
+ * }
+ * ```
  */
 data class FeatureFlag(val key: String, val value: Boolean, val usage: String) : Serializable

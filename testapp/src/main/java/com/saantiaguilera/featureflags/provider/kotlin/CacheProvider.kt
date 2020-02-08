@@ -9,8 +9,8 @@ class CacheProvider(private val repository: CacheRepository) : FeatureFlagProvid
 
     override fun provide(feature: FeatureFlag): FeatureFlagResult {
         return repository.getFeatures()[feature.key]
-            ?.let { createExistingResult(it) }
-            ?: createMissingResult(feature.value)
+            ?.let { FeatureFlagResult.create(it) }
+            ?: FeatureFlagResult.create(feature.value, exists = false)
     }
 
 }

@@ -5,7 +5,6 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.saantiaguilera.featureflags.FeatureFlag
 import com.saantiaguilera.featureflags.FeatureFlagProvider
 import com.saantiaguilera.featureflags.FeatureFlagResult
-import com.saantiaguilera.featureflags.createExistingResult
 
 /**
  * Basic firebase feature flag provider
@@ -22,7 +21,7 @@ class FirebaseFeatureFlagProvider() : FeatureFlagProvider,
 
     override fun provide(feature: FeatureFlag): FeatureFlagResult {
         // We are not handling missing cases here.
-        return createExistingResult(remoteConfig.getBoolean(feature.key))
+        return FeatureFlagResult.create(remoteConfig.getBoolean(feature.key))
     }
 
     override fun refresh() {
