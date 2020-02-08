@@ -106,13 +106,6 @@ Once you have your providers and feature-flags. You can start using them anywher
 fun navigateHome(featureFlagProvider: FeatureFlagProvider) {
     val result = featureFlagProvider.provide(FeatureCatalog.HomeV2)
 
-    if (!result.exists) {
-        // Do something? It wasn't at the provider, you may want to log it somewhere
-        // so you get notice of it.
-        // Don't worry though, the default feature value will still be used by the result so 
-        // it's safe to switch afterwards
-    }
-
     when (result) {
         is FeatureFlagResult.Enabled -> {
             // Navigate to home v2
@@ -133,11 +126,6 @@ fun navigateHome(featureFlagProvider: FeatureFlagProvider) {
         .onDisabled {
             // Navigate to home v1
         }
-        .onMissing {
-            // Do something? It wasn't found at the provider, you may want to log it somewhere
-            // so you get notice of it.
-            // Don't worry though, the default feature value will still be executed so it's bug free
-        }
 }
 ```
 #### If usage
@@ -145,18 +133,41 @@ fun navigateHome(featureFlagProvider: FeatureFlagProvider) {
 fun navigateHome(featureFlagProvider: FeatureFlagProvider) {
     val result = featureFlagProvider.provide(FeatureCatalog.HomeV2)
 
+    if (result.isEnabled()) {
+        // Navigate to home v2
+    } else {
+        // Navigate to home v1
+    }
+}
+```
+
+### Handling missing feature-flags
+
+Regardless of the result, a flag may have been missing at the provider (and the provided result was simply a default one).
+
+#### If usage
+```kotlin
+fun navigateHome(featureFlagProvider: FeatureFlagProvider) {
+    val result = featureFlagProvider.provide(FeatureCatalog.HomeV2)
+    
     if (!result.exists) {
         // Do something? It wasn't at the provider, you may want to log it somewhere
         // so you get notice of it.
         // Don't worry though, the default feature value will still be used afterwards
         // for checking if it's enabled
     }
+}
+```
 
-    if (result.isEnabled()) {
-        // Navigate to home v2
-    } else {
-        // Navigate to home v1
-    }
+#### Functional usage
+```kotlin
+fun navigateHome(featureFlagProvider: FeatureFlagProvider) {
+    featureFlagProvider.provide(FeatureCatalog.HomeV2)
+        .onMissing {
+            // Do something? It wasn't found at the provider, you may want to log it somewhere
+            // so you get notice of it.
+            // Don't worry though, the default feature value will still be executed so it's bug free
+        }
 }
 ```
 
