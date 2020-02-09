@@ -99,7 +99,9 @@ You can find an example of usage under the [testapp directory](testapp/src/main/
 
 ### Consuming a provider
 
-Once you have your providers and feature-flags. You can start using them anywhere.
+Once you have your providers and feature-flags you can start using them anywhere.
+
+In the following samples I will simply show how to consume the API. _It's [recommended](https://martinfowler.com/articles/feature-toggles.html) to apply inversion of decision so you can avoid conditionals and code branches._
 
 #### Sealed-class usage
 ```kotlin
