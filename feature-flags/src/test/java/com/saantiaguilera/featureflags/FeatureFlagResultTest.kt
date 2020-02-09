@@ -117,6 +117,15 @@ class FeatureFlagResultTest {
         Assert.assertFalse(called)
     }
 
+    @Test
+    fun `Test given a default result, then it constructs with the default value and not existing`() {
+        val result = FeatureFlagResult(feature)
+
+        Assert.assertEquals(feature, result.featureFlag)
+        Assert.assertFalse(result.enabled)
+        Assert.assertFalse(result.exists)
+    }
+
     companion object TestCatalog {
         val feature = FeatureFlag("test.key", false, "Test usage")
     }
