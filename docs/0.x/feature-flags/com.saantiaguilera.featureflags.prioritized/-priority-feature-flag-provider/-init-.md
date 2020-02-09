@@ -32,16 +32,15 @@ class StaticPriorityComparator : Comparator<StaticPriority> {
     }
 }
 
-// Usage:
+// Usage with 2 providers (of course it can be N):
 fun using() {
     val provider = PriorityFeatureFlagProvider(
         listOf(
             StaticPriorityProvider(yourProviderOne, priorityProviderOne),
             StaticPriorityProvider(yourProviderTwo, priorityProviderTwo)
-            /* ... */
-            ),
-            StaticPriorityComparator()
-        )
-    }
+        ),
+        StaticPriorityComparator()
+    )
+}
 ```
 
