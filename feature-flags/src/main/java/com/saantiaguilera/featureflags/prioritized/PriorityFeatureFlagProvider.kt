@@ -41,8 +41,8 @@ import com.saantiaguilera.featureflags.FeatureFlagResult
  *              /* ... */
  *          ),
  *          StaticPriorityComparator()
- *      }
- *  )
+ *      )
+ *  }
  * ```
  */
 class PriorityFeatureFlagProvider<P : FeatureFlagProvider>(

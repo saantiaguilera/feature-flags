@@ -41,8 +41,8 @@ fun using() {
             /* ... */
             ),
             StaticPriorityComparator()
-        }
-    )
+        )
+    }
 ```
 
 ### Constructors

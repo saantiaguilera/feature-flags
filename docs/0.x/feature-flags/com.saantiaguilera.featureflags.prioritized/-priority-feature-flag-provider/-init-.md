@@ -41,7 +41,7 @@ fun using() {
             /* ... */
             ),
             StaticPriorityComparator()
-        }
-    )
+        )
+    }
 ```
 
