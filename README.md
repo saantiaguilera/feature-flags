@@ -72,8 +72,8 @@ class RepositoryProvider(private val repository: RepositoryApi) : FeatureFlagPro
 
     override fun provide(feature: FeatureFlag): FeatureFlagResult {
         return repository.getFeatures()[feature.key]
-            ?.let { FeatureFlagResult.create(it) } // If not null, we return an existing result with it's value 
-            ?: FeatureFlagResult.create(feature.value, exists = false) // If null we return the default value
+            ?.let { FeatureFlagResult(feature, it) } // If not null, we return an existing result with it's value 
+            ?: FeatureFlagResult(feature) // If null we return the default value
     }
 }
 ```
@@ -104,21 +104,6 @@ Once you have your providers and feature-flags you can start using them anywhere
 
 In the following samples I will simply show how to consume the API. _It's [recommended](https://martinfowler.com/articles/feature-toggles.html) to apply inversion of decision so you can avoid conditionals and code branches._
 
-#### Sealed-class usage
-```kotlin
-fun navigateHome(featureFlagProvider: FeatureFlagProvider) {
-    val result = featureFlagProvider.provide(FeatureCatalog.HomeV2)
-
-    when (result) {
-        is FeatureFlagResult.Enabled -> {
-            // Navigate to home v2
-        }
-        is FeatureFlagResult.Disabled -> {
-            // Navigate to home v1
-        }
-    }
-}
-```
 #### Functional usage
 ```kotlin
 fun navigateHome(featureFlagProvider: FeatureFlagProvider) {
@@ -131,7 +116,7 @@ fun navigateHome(featureFlagProvider: FeatureFlagProvider) {
         }
 }
 ```
-#### If usage
+#### Conditional usage
 ```kotlin
 fun navigateHome(featureFlagProvider: FeatureFlagProvider) {
     val result = featureFlagProvider.provide(FeatureCatalog.HomeV2)
@@ -148,7 +133,19 @@ fun navigateHome(featureFlagProvider: FeatureFlagProvider) {
 
 Regardless of the result, a flag may have been missing at the provider (and the provided result was simply a default one).
 
-#### If usage
+#### Functional usage
+```kotlin
+fun navigateHome(featureFlagProvider: FeatureFlagProvider) {
+    featureFlagProvider.provide(FeatureCatalog.HomeV2)
+        .onMissing {
+            // Do something? It wasn't found at the provider, you may want to log it somewhere
+            // so you get notice of it.
+            // Don't worry though, the default feature value will still be executed so it's bug free
+        }
+}
+```
+
+#### Conditional usage
 ```kotlin
 fun navigateHome(featureFlagProvider: FeatureFlagProvider) {
     val result = featureFlagProvider.provide(FeatureCatalog.HomeV2)
@@ -159,18 +156,6 @@ fun navigateHome(featureFlagProvider: FeatureFlagProvider) {
         // Don't worry though, the default feature value will still be used afterwards
         // for checking if it's enabled
     }
-}
-```
-
-#### Functional usage
-```kotlin
-fun navigateHome(featureFlagProvider: FeatureFlagProvider) {
-    featureFlagProvider.provide(FeatureCatalog.HomeV2)
-        .onMissing {
-            // Do something? It wasn't found at the provider, you may want to log it somewhere
-            // so you get notice of it.
-            // Don't worry though, the default feature value will still be executed so it's bug free
-        }
 }
 ```
 
