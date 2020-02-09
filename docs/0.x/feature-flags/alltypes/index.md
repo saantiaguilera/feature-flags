@@ -24,7 +24,8 @@ Provides responses against requested feature flags, potentially enabling or disa
 
 ##### [com.saantiaguilera.featureflags.FeatureFlagResult](../com.saantiaguilera.featureflags/-feature-flag-result/index.md)
 
-Binary result of a feature-flag provision. It can be either [Enabled](../com.saantiaguilera.featureflags/-feature-flag-result/-enabled/index.md) or [Disabled](../com.saantiaguilera.featureflags/-feature-flag-result/-disabled/index.md).
+Binary result of a feature-flag provision. It can be [enabled](../com.saantiaguilera.featureflags/-feature-flag-result/enabled.md) and should denote if it was
+found at the requested provider through [exists](../com.saantiaguilera.featureflags/-feature-flag-result/exists.md)
 
 
 |

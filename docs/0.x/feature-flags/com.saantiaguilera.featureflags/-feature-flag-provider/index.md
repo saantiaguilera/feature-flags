@@ -19,17 +19,17 @@ val provider = FeatureFlagProvider { feature ->
 ```
 
 If a provider doesn't have the requested feature, it should respond with a missing one using
-[FeatureFlagResult.create](../-feature-flag-result/create.md) (specifying as a second parameter that it doesn't)
+[FeatureFlagResult](../-feature-flag-result/index.md) (simply using the single feature constructor will suffice)
 
 ``` kotlin
 val provider = FeatureFlagProvider { feature ->
     if (!/* check feature existence */) {
-         // feature.value is the default provided value. We should also denote it doesn't exists.
-         return FeatureFlagResult.create(feature.value, exists = false)
+         // This will use the internal feature value, thus assuming it didn't exist here.
+         return FeatureFlagResult(feature)
      }
 
      // If the feature exists. return it from somewhere
-     return FeatureFlagResult.create(/* get if the feature is enabled / disabled */)
+     return FeatureFlagResult(feature, /* get if the feature is enabled / disabled */)
  }
 ```
 
@@ -56,8 +56,8 @@ class UserBasedProvider(
 
         // Simple lookup of a map
         return flagsForUser.find { it.key == feature.key }
-            ?.value?.let { FeatureFlagResult.create(it) }
-            ?: FeatureFlagResult.create(feature.value, exists = false)
+            ?.value?.let { FeatureFlagResult(feature, it) }
+            ?: FeatureFlagResult(feature)
         }
     }
 }

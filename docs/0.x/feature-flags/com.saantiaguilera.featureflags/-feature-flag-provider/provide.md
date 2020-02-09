@@ -6,7 +6,6 @@
 
 Provide for the given feature a result.
 
-The result should denote if the feature is [Enabled](../-feature-flag-result/-enabled/index.md) or
-[Disabled](../-feature-flag-result/-disabled/index.md). It should also represent if it was found or not
-through [FeatureFlagResult.exists](../-feature-flag-result/exists.md).
+The result should denote if the feature is [enabled](../-feature-flag-result/enabled.md). It should
+also represent if it was found or not through [FeatureFlagResult.exists](../-feature-flag-result/exists.md).
 
