@@ -16,12 +16,12 @@ class PriorityFeatureFlagProviderTest {
                 object : TestProvider(1) {
                     override fun provide(feature: FeatureFlag): FeatureFlagResult {
                         called = true // Because of lowest priority, this shouldnt be called.
-                        return FeatureFlagResult(enabled = true, exists = true)
+                        return FeatureFlagResult(feature, enabled = true, exists = true)
                     }
                 },
                 object : TestProvider(100) {
                     override fun provide(feature: FeatureFlag): FeatureFlagResult {
-                        return FeatureFlagResult(enabled = false, exists = true)
+                        return FeatureFlagResult(feature, enabled = false, exists = true)
                     }
                 }
             ),
@@ -39,12 +39,12 @@ class PriorityFeatureFlagProviderTest {
             listOf(
                 object : TestProvider(1) {
                     override fun provide(feature: FeatureFlag): FeatureFlagResult {
-                        return FeatureFlagResult(enabled = true, exists = true)
+                        return FeatureFlagResult(feature, enabled = true, exists = true)
                     }
                 },
                 object : TestProvider(100) {
                     override fun provide(feature: FeatureFlag): FeatureFlagResult {
-                        return FeatureFlagResult(enabled = false, exists = true) // This should be used.
+                        return FeatureFlagResult(feature, enabled = false, exists = true) // This should be used.
                     }
                 }
             ),
@@ -64,17 +64,17 @@ class PriorityFeatureFlagProviderTest {
                 object : TestProvider(1) {
                     override fun provide(feature: FeatureFlag): FeatureFlagResult {
                         if (feature.key == "key") {
-                            return FeatureFlagResult(enabled = true, exists = true)
+                            return FeatureFlagResult(feature, enabled = true, exists = true)
                         }
-                        return FeatureFlagResult(enabled = false, exists = false)
+                        return FeatureFlagResult(feature, enabled = false, exists = false)
                     }
                 },
                 object : TestProvider(100) {
                     override fun provide(feature: FeatureFlag): FeatureFlagResult {
                         if (feature.key == "unexpected") {
-                            return FeatureFlagResult(enabled = false, exists = true)
+                            return FeatureFlagResult(feature, enabled = false, exists = true)
                         }
-                        return FeatureFlagResult(enabled = false, exists = false)
+                        return FeatureFlagResult(feature, enabled = false, exists = false)
                     }
                 }
             ),
@@ -94,17 +94,17 @@ class PriorityFeatureFlagProviderTest {
                 object : TestProvider(1) {
                     override fun provide(feature: FeatureFlag): FeatureFlagResult {
                         if (feature.key == "key") {
-                            return FeatureFlagResult(enabled = true, exists = true)
+                            return FeatureFlagResult(feature, enabled = true, exists = true)
                         }
-                        return FeatureFlagResult(enabled = false, exists = false)
+                        return FeatureFlagResult(feature, enabled = false, exists = false)
                     }
                 },
                 object : TestProvider(100) {
                     override fun provide(feature: FeatureFlag): FeatureFlagResult {
                         if (feature.key == "key") {
-                            return FeatureFlagResult(enabled = false, exists = true)
+                            return FeatureFlagResult(feature, enabled = false, exists = true)
                         }
-                        return FeatureFlagResult(enabled = false, exists = false)
+                        return FeatureFlagResult(feature, enabled = false, exists = false)
                     }
                 }
             ),
@@ -122,12 +122,12 @@ class PriorityFeatureFlagProviderTest {
         val providers = mutableListOf(
             object : TestProvider(1) {
                 override fun provide(feature: FeatureFlag): FeatureFlagResult {
-                    return FeatureFlagResult(enabled = false, exists = false)
+                    return FeatureFlagResult(feature, enabled = false, exists = false)
                 }
             },
             object : TestProvider(100) {
                 override fun provide(feature: FeatureFlag): FeatureFlagResult {
-                    return FeatureFlagResult(enabled = false, exists = false)
+                    return FeatureFlagResult(feature, enabled = false, exists = false)
                 }
             }
         )
@@ -138,7 +138,7 @@ class PriorityFeatureFlagProviderTest {
 
         providers.add(object : TestProvider(500) {
             override fun provide(feature: FeatureFlag): FeatureFlagResult {
-                return FeatureFlagResult(enabled = true, exists = true)
+                return FeatureFlagResult(feature, enabled = true, exists = true)
             }
         })
         val result = provider.provide(FeatureFlag("", false, ""))
@@ -148,4 +148,8 @@ class PriorityFeatureFlagProviderTest {
     }
 
     abstract class TestProvider(val priority: Int) : FeatureFlagProvider
+
+    companion object TestCatalog {
+        val feature = FeatureFlag("test.key", false, "Test usage")
+    }
 }

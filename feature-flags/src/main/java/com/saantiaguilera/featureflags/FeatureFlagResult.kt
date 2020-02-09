@@ -10,15 +10,18 @@ import kotlin.contracts.contract
  * found at the requested provider through [exists]
  */
 data class FeatureFlagResult(
+    @get:JvmName("featureFlag") val featureFlag: FeatureFlag,
     @get:JvmName("enabled") val enabled: Boolean,
     @get:JvmName("exists") val exists: Boolean
 ) {
     /**
-     * Convenience constructor for creating existing results
-     *
-     * This is useful if you already know all your flags will exist.
+     * Convenience constructor for creating existing results.
      */
-    constructor(enabled: Boolean) : this(enabled, true)
+    constructor(featureFlag: FeatureFlag, enabled: Boolean) : this(featureFlag, enabled, true)
+    /**
+     * Convenience constructor for creating missing results.
+     */
+    constructor(featureFlag: FeatureFlag) : this(featureFlag, featureFlag.value, false)
 }
 
 /**

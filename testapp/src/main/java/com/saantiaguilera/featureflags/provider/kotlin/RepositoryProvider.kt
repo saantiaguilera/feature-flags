@@ -22,8 +22,8 @@ class RepositoryProvider(private val repository: Repository) : FeatureFlagProvid
         return features.find {
                 it.key == feature.key
             }
-            ?.value?.let { FeatureFlagResult(it) }
-            ?: FeatureFlagResult(feature.value, exists = false)
+            ?.value?.let { FeatureFlagResult(feature, it) }
+            ?: FeatureFlagResult(feature)
     }
 
     override fun refresh() {

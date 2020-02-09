@@ -26,9 +26,9 @@ public class CacheProvider implements FeatureFlagProvider {
         final Boolean result = repository.getFeatures().getOrDefault(feature.getKey(), null);
 
         if (result == null) {
-            return new FeatureFlagResult(feature.getValue(), false);
+            return new FeatureFlagResult(feature);
         } else {
-            return new FeatureFlagResult(result);
+            return new FeatureFlagResult(feature, result);
         }
     }
 

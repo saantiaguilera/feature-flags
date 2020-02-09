@@ -25,8 +25,8 @@ class UserProvider(private val repository: UserRepository,
         return features.find {
                 it.key == feature.key
             }
-            ?.value?.let { FeatureFlagResult(it) }
-            ?: FeatureFlagResult(feature.value, exists = false)
+            ?.value?.let { FeatureFlagResult(feature, it) }
+            ?: FeatureFlagResult(feature)
     }
 
     override fun refresh() {

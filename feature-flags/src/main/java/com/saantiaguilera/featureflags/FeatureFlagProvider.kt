@@ -15,17 +15,17 @@ package com.saantiaguilera.featureflags
  * ```
  *
  * If a provider doesn't have the requested feature, it should respond with a missing one using
- * [FeatureFlagResult] (specifying as a second parameter that it doesn't)
+ * [FeatureFlagResult] (simply using the single feature constructor will suffice)
  *
  * ```kotlin
  * val provider = FeatureFlagProvider { feature ->
  *     if (!/* check feature existence */) {
- *         // feature.value is the default provided value. We should also denote it doesn't exists.
- *         return FeatureFlagResult(feature.value, exists = false)
+ *         // This will use the internal feature value, thus assuming it didn't exist here.
+ *         return FeatureFlagResult(feature)
  *     }
  *
  *     // If the feature exists. return it from somewhere
- *     return FeatureFlagResult(/* get if the feature is enabled / disabled */)
+ *     return FeatureFlagResult(feature, /* get if the feature is enabled / disabled */)
  * }
  * ```
  *
@@ -51,8 +51,8 @@ package com.saantiaguilera.featureflags
  *
  *         // Simple lookup of a map
  *         return flagsForUser.find { it.key == feature.key }
- *             ?.value?.let { FeatureFlagResult(it) }
- *             ?: FeatureFlagResult(feature.value, exists = false)
+ *             ?.value?.let { FeatureFlagResult(feature, it) }
+ *             ?: FeatureFlagResult(feature)
  *         }
  *     }
  * }
