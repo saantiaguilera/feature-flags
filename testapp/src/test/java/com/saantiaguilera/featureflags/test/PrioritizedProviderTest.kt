@@ -21,7 +21,7 @@ class PrioritizedProviderTest : AppCompatActivity() {
      * When using it, consider minimally injecting providers from a decoupled place (either with
      * a DI framework, or by your own hand)
      */
-    private fun createProvider(): FeatureFlagProvider = PriorityFeatureFlagProvider(
+    private fun createPrioritizedProvider(): FeatureFlagProvider = PriorityFeatureFlagProvider(
         getProviders(),
         StaticPriorityComparator()
     )
@@ -70,24 +70,30 @@ class PrioritizedProviderTest : AppCompatActivity() {
     }
 
     @Test
-    fun `Test getting horizontal sign in is true, because ultra high priority goes first and has it true`() {
-        val result = createProvider().provide(FeatureCatalog.horizontalSignIn)
+    fun `Test given a prioritized provider, when getting horizontalSignIn, then it's enabled and exists`() {
+        val prioritizedProvider = createPrioritizedProvider()
+
+        val result = prioritizedProvider.provide(FeatureCatalog.horizontalSignIn)
 
         Assert.assertTrue(result is FeatureFlagResult.Enabled)
         Assert.assertTrue(result.exists)
     }
 
     @Test
-    fun `Test getting cache 2k is false, because the low priority one has it as such`() {
-        val result = createProvider().provide(FeatureCatalog.cache2K)
+    fun `Test given a prioritized provider, when getting cache2K, then it's disabled and exists`() {
+        val prioritizedProvider = createPrioritizedProvider()
+
+        val result = prioritizedProvider.provide(FeatureCatalog.cache2K)
 
         Assert.assertTrue(result is FeatureFlagResult.Disabled)
         Assert.assertTrue(result.exists)
     }
 
     @Test
-    fun `Test getting visa is false, because none of the providers has it`() {
-        val result = createProvider().provide(FeatureCatalog.cardPaymentsWithVisa)
+    fun `Test given a prioritized provider, when getting cardPaymentsWithVisa, then it's disabled and doesn't exist`() {
+        val prioritizedProvider = createPrioritizedProvider()
+
+        val result = prioritizedProvider.provide(FeatureCatalog.cardPaymentsWithVisa)
 
         Assert.assertTrue(result is FeatureFlagResult.Disabled)
         Assert.assertFalse(result.exists)

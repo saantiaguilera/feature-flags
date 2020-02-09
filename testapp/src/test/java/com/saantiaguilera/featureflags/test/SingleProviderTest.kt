@@ -31,16 +31,20 @@ class SingleProviderTest {
         })
 
     @Test
-    fun `Test getting horizontal sign in is true, because the cache has is as such`() {
-        val result = createProvider().provide(FeatureCatalog.horizontalSignIn)
+    fun `Test given a provider, when getting horizontalSignIn, then it's enabled and exists`() {
+        val provider = createProvider()
+
+        val result = provider.provide(FeatureCatalog.horizontalSignIn)
 
         Assert.assertTrue(result is FeatureFlagResult.Enabled)
         Assert.assertTrue(result.exists)
     }
 
     @Test
-    fun `Test getting cache 2k is false, because the cache has is as such`() {
-        val result = createProvider().provide(FeatureCatalog.cache2K)
+    fun `Test given a provider, when getting cache2K, then it's disabled and exists`() {
+        val provider = createProvider()
+
+        val result = provider.provide(FeatureCatalog.cache2K)
 
         Assert.assertTrue(result is FeatureFlagResult.Disabled)
         Assert.assertTrue(result.exists)
@@ -48,8 +52,10 @@ class SingleProviderTest {
 
 
     @Test
-    fun `Test getting visa is false, because that's the default and also it does not exist`() {
-        val result = createProvider().provide(FeatureCatalog.cardPaymentsWithVisa)
+    fun `Test given a provider, when getting cardPaymentsWithVisa, then it's disabled and doesn't exist`() {
+        val provider = createProvider()
+
+        val result = provider.provide(FeatureCatalog.cardPaymentsWithVisa)
 
         Assert.assertTrue(result is FeatureFlagResult.Disabled)
         Assert.assertFalse(result.exists)
