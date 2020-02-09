@@ -2,7 +2,6 @@ package com.saantiaguilera.featureflags.sample.kotlin
 
 import android.util.Log
 import com.saantiaguilera.featureflags.FeatureFlagProvider
-import com.saantiaguilera.featureflags.FeatureFlagResult
 import com.saantiaguilera.featureflags.feature.kotlin.FeatureCatalog
 
 /**
@@ -34,30 +33,12 @@ class ImageLoadingInitializer(private val featureFlagProvider: FeatureFlagProvid
             Log.w("Missing", "Fresco feature isn't at the provider")
         }
 
-        // Both are equally the same:
-        checkByWhen(result)
-        checkByIf(result)
-    }
-
-    fun checkByWhen(result: FeatureFlagResult) {
-        when (result) {
-            is FeatureFlagResult.Enabled -> {
-                // Initialize with fresco
-            }
-            is FeatureFlagResult.Disabled -> {
-                // Initialize with picasso
-            }
-        }
-    }
-
-    fun checkByIf(result: FeatureFlagResult) {
         if (result.enabled) {
             // Initialize with fresco
         } else {
             // Initialize with picasso
         }
     }
-
 }
 
 interface Initializer {

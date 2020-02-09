@@ -1,7 +1,6 @@
 package com.saantiaguilera.featureflags.test
 
 import com.saantiaguilera.featureflags.FeatureFlagProvider
-import com.saantiaguilera.featureflags.FeatureFlagResult
 import com.saantiaguilera.featureflags.feature.kotlin.FeatureCatalog
 import com.saantiaguilera.featureflags.provider.kotlin.CacheProvider
 import com.saantiaguilera.featureflags.provider.kotlin.CacheRepository
@@ -36,7 +35,7 @@ class SingleProviderTest {
 
         val result = provider.provide(FeatureCatalog.horizontalSignIn)
 
-        Assert.assertTrue(result is FeatureFlagResult.Enabled)
+        Assert.assertTrue(result.enabled)
         Assert.assertTrue(result.exists)
     }
 
@@ -46,7 +45,7 @@ class SingleProviderTest {
 
         val result = provider.provide(FeatureCatalog.cache2K)
 
-        Assert.assertTrue(result is FeatureFlagResult.Disabled)
+        Assert.assertFalse(result.enabled)
         Assert.assertTrue(result.exists)
     }
 
@@ -57,7 +56,7 @@ class SingleProviderTest {
 
         val result = provider.provide(FeatureCatalog.cardPaymentsWithVisa)
 
-        Assert.assertTrue(result is FeatureFlagResult.Disabled)
+        Assert.assertFalse(result.enabled)
         Assert.assertFalse(result.exists)
     }
 

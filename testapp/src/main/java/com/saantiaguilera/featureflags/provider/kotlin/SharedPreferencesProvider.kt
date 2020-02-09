@@ -1,7 +1,9 @@
 package com.saantiaguilera.featureflags.provider.kotlin
 
 import android.content.Context
-import com.saantiaguilera.featureflags.*
+import com.saantiaguilera.featureflags.FeatureFlag
+import com.saantiaguilera.featureflags.FeatureFlagProvider
+import com.saantiaguilera.featureflags.FeatureFlagResult
 
 /**
  * Shared preferences provider.
@@ -12,10 +14,10 @@ class SharedPreferencesProvider(context: Context) : FeatureFlagProvider {
 
     override fun provide(feature: FeatureFlag): FeatureFlagResult {
         if (!sharedPreference.contains(feature.key)) {
-            return FeatureFlagResult.create(feature.value, exists = false)
+            return FeatureFlagResult(feature.value, exists = false)
         }
 
-        return FeatureFlagResult.create(sharedPreference.getBoolean(feature.key, feature.value))
+        return FeatureFlagResult(sharedPreference.getBoolean(feature.key, feature.value))
     }
 
 }

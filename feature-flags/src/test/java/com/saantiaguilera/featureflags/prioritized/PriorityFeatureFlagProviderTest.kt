@@ -16,12 +16,12 @@ class PriorityFeatureFlagProviderTest {
                 object : TestProvider(1) {
                     override fun provide(feature: FeatureFlag): FeatureFlagResult {
                         called = true // Because of lowest priority, this shouldnt be called.
-                        return FeatureFlagResult.Enabled.Existing
+                        return FeatureFlagResult(enabled = true, exists = true)
                     }
                 },
                 object : TestProvider(100) {
                     override fun provide(feature: FeatureFlag): FeatureFlagResult {
-                        return FeatureFlagResult.Disabled.Existing
+                        return FeatureFlagResult(enabled = false, exists = true)
                     }
                 }
             ),
@@ -39,12 +39,12 @@ class PriorityFeatureFlagProviderTest {
             listOf(
                 object : TestProvider(1) {
                     override fun provide(feature: FeatureFlag): FeatureFlagResult {
-                        return FeatureFlagResult.Enabled.Existing
+                        return FeatureFlagResult(enabled = true, exists = true)
                     }
                 },
                 object : TestProvider(100) {
                     override fun provide(feature: FeatureFlag): FeatureFlagResult {
-                        return FeatureFlagResult.Disabled.Existing // This should be used.
+                        return FeatureFlagResult(enabled = false, exists = true) // This should be used.
                     }
                 }
             ),
@@ -53,7 +53,7 @@ class PriorityFeatureFlagProviderTest {
 
         val result = provider.provide(FeatureFlag("key", false, "usage"))
 
-        Assert.assertTrue(result is FeatureFlagResult.Disabled)
+        Assert.assertFalse(result.enabled)
         Assert.assertTrue(result.exists)
     }
 
@@ -64,17 +64,17 @@ class PriorityFeatureFlagProviderTest {
                 object : TestProvider(1) {
                     override fun provide(feature: FeatureFlag): FeatureFlagResult {
                         if (feature.key == "key") {
-                            return FeatureFlagResult.Enabled.Existing
+                            return FeatureFlagResult(enabled = true, exists = true)
                         }
-                        return FeatureFlagResult.Disabled.Missing
+                        return FeatureFlagResult(enabled = false, exists = false)
                     }
                 },
                 object : TestProvider(100) {
                     override fun provide(feature: FeatureFlag): FeatureFlagResult {
                         if (feature.key == "unexpected") {
-                            return FeatureFlagResult.Disabled.Existing
+                            return FeatureFlagResult(enabled = false, exists = true)
                         }
-                        return FeatureFlagResult.Disabled.Missing
+                        return FeatureFlagResult(enabled = false, exists = false)
                     }
                 }
             ),
@@ -83,7 +83,7 @@ class PriorityFeatureFlagProviderTest {
 
         val result = provider.provide(FeatureFlag("key", false, "usage"))
 
-        Assert.assertTrue(result is FeatureFlagResult.Enabled)
+        Assert.assertTrue(result.enabled)
         Assert.assertTrue(result.exists)
     }
 
@@ -94,17 +94,17 @@ class PriorityFeatureFlagProviderTest {
                 object : TestProvider(1) {
                     override fun provide(feature: FeatureFlag): FeatureFlagResult {
                         if (feature.key == "key") {
-                            return FeatureFlagResult.Enabled.Existing
+                            return FeatureFlagResult(enabled = true, exists = true)
                         }
-                        return FeatureFlagResult.Disabled.Missing
+                        return FeatureFlagResult(enabled = false, exists = false)
                     }
                 },
                 object : TestProvider(100) {
                     override fun provide(feature: FeatureFlag): FeatureFlagResult {
                         if (feature.key == "key") {
-                            return FeatureFlagResult.Disabled.Existing
+                            return FeatureFlagResult(enabled = false, exists = true)
                         }
-                        return FeatureFlagResult.Disabled.Missing
+                        return FeatureFlagResult(enabled = false, exists = false)
                     }
                 }
             ),
@@ -113,7 +113,7 @@ class PriorityFeatureFlagProviderTest {
 
         val result = provider.provide(FeatureFlag("unexpected", false, "usage"))
 
-        Assert.assertTrue(result is FeatureFlagResult.Disabled)
+        Assert.assertFalse(result.enabled)
         Assert.assertFalse(result.exists)
     }
 
@@ -122,12 +122,12 @@ class PriorityFeatureFlagProviderTest {
         val providers = mutableListOf(
             object : TestProvider(1) {
                 override fun provide(feature: FeatureFlag): FeatureFlagResult {
-                    return FeatureFlagResult.Disabled.Missing
+                    return FeatureFlagResult(enabled = false, exists = false)
                 }
             },
             object : TestProvider(100) {
                 override fun provide(feature: FeatureFlag): FeatureFlagResult {
-                    return FeatureFlagResult.Disabled.Missing
+                    return FeatureFlagResult(enabled = false, exists = false)
                 }
             }
         )
@@ -138,12 +138,12 @@ class PriorityFeatureFlagProviderTest {
 
         providers.add(object : TestProvider(500) {
             override fun provide(feature: FeatureFlag): FeatureFlagResult {
-                return FeatureFlagResult.Enabled.Existing
+                return FeatureFlagResult(enabled = true, exists = true)
             }
         })
         val result = provider.provide(FeatureFlag("", false, ""))
 
-        Assert.assertTrue(result is FeatureFlagResult.Disabled)
+        Assert.assertFalse(result.enabled)
         Assert.assertFalse(result.exists)
     }
 

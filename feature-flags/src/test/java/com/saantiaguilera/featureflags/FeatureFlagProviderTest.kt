@@ -8,11 +8,12 @@ class FeatureFlagProviderTest {
     @Test
     fun `Test given an inline feature flag provider, when running it, then it runs the lambda`() {
         val provider = FeatureFlagProvider {
-            FeatureFlagResult.create(value = true, exists = false)
+            FeatureFlagResult(enabled = true, exists = false)
         }
 
         val result = provider.provide(FeatureFlag("", false, ""))
 
-        Assert.assertEquals(FeatureFlagResult.Enabled.Missing, result)
+        Assert.assertTrue(result.enabled)
+        Assert.assertFalse(result.exists)
     }
 }

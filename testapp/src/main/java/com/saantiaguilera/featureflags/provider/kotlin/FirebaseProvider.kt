@@ -21,7 +21,7 @@ class FirebaseFeatureFlagProvider() : FeatureFlagProvider,
 
     override fun provide(feature: FeatureFlag): FeatureFlagResult {
         // We are not handling missing cases here.
-        return FeatureFlagResult.create(remoteConfig.getBoolean(feature.key))
+        return FeatureFlagResult(remoteConfig.getBoolean(feature.key))
     }
 
     override fun refresh() {

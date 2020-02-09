@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.saantiaguilera.featureflags.FeatureFlagProvider;
 import com.saantiaguilera.featureflags.FeatureFlagResult;
-import com.saantiaguilera.featureflags.FeatureFlagResultExtension;
 import com.saantiaguilera.featureflags.feature.java.FeatureCatalog;
 import com.saantiaguilera.featureflags.sample.kotlin.Initializer;
 

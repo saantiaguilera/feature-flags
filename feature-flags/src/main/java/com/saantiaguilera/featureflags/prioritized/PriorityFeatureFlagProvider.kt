@@ -63,6 +63,6 @@ class PriorityFeatureFlagProvider<P : FeatureFlagProvider>(
             .asSequence()
             .map { it.provide(feature) }
             .firstOrNull { it.exists }
-            ?: FeatureFlagResult.create(feature.value, exists = false)
+            ?: FeatureFlagResult(feature.value, exists = false)
     }
 }

@@ -1,6 +1,8 @@
 package com.saantiaguilera.featureflags.provider.kotlin
 
-import com.saantiaguilera.featureflags.*
+import com.saantiaguilera.featureflags.FeatureFlag
+import com.saantiaguilera.featureflags.FeatureFlagProvider
+import com.saantiaguilera.featureflags.FeatureFlagResult
 
 /**
  * Basic provider that hits a cache on every request
@@ -9,8 +11,8 @@ class CacheProvider(private val repository: CacheRepository) : FeatureFlagProvid
 
     override fun provide(feature: FeatureFlag): FeatureFlagResult {
         return repository.getFeatures()[feature.key]
-            ?.let { FeatureFlagResult.create(it) }
-            ?: FeatureFlagResult.create(feature.value, exists = false)
+            ?.let { FeatureFlagResult(it) }
+            ?: FeatureFlagResult(feature.value, exists = false)
     }
 
 }

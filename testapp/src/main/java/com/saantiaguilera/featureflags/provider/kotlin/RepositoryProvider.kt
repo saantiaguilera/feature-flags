@@ -1,8 +1,8 @@
 package com.saantiaguilera.featureflags.provider.kotlin
 
-import com.saantiaguilera.featureflags.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.saantiaguilera.featureflags.FeatureFlag
+import com.saantiaguilera.featureflags.FeatureFlagProvider
+import com.saantiaguilera.featureflags.FeatureFlagResult
 import kotlinx.coroutines.runBlocking
 
 /**
@@ -22,8 +22,8 @@ class RepositoryProvider(private val repository: Repository) : FeatureFlagProvid
         return features.find {
                 it.key == feature.key
             }
-            ?.value?.let { FeatureFlagResult.create(it) }
-            ?: FeatureFlagResult.create(feature.value, exists = false)
+            ?.value?.let { FeatureFlagResult(it) }
+            ?: FeatureFlagResult(feature.value, exists = false)
     }
 
     override fun refresh() {

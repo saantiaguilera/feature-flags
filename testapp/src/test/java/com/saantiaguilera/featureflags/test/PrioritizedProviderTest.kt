@@ -3,7 +3,6 @@ package com.saantiaguilera.featureflags.test
 import androidx.appcompat.app.AppCompatActivity
 import com.saantiaguilera.featureflags.FeatureFlag
 import com.saantiaguilera.featureflags.FeatureFlagProvider
-import com.saantiaguilera.featureflags.FeatureFlagResult
 import com.saantiaguilera.featureflags.feature.kotlin.FeatureCatalog
 import com.saantiaguilera.featureflags.prioritized.PriorityFeatureFlagProvider
 import com.saantiaguilera.featureflags.provider.kotlin.*
@@ -75,7 +74,7 @@ class PrioritizedProviderTest : AppCompatActivity() {
 
         val result = prioritizedProvider.provide(FeatureCatalog.horizontalSignIn)
 
-        Assert.assertTrue(result is FeatureFlagResult.Enabled)
+        Assert.assertTrue(result.enabled)
         Assert.assertTrue(result.exists)
     }
 
@@ -85,7 +84,7 @@ class PrioritizedProviderTest : AppCompatActivity() {
 
         val result = prioritizedProvider.provide(FeatureCatalog.cache2K)
 
-        Assert.assertTrue(result is FeatureFlagResult.Disabled)
+        Assert.assertFalse(result.enabled)
         Assert.assertTrue(result.exists)
     }
 
@@ -95,7 +94,7 @@ class PrioritizedProviderTest : AppCompatActivity() {
 
         val result = prioritizedProvider.provide(FeatureCatalog.cardPaymentsWithVisa)
 
-        Assert.assertTrue(result is FeatureFlagResult.Disabled)
+        Assert.assertFalse(result.enabled)
         Assert.assertFalse(result.exists)
     }
 

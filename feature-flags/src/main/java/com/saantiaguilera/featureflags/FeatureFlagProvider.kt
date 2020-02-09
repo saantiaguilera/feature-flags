@@ -15,17 +15,17 @@ package com.saantiaguilera.featureflags
  * ```
  *
  * If a provider doesn't have the requested feature, it should respond with a missing one using
- * [FeatureFlagResult.create] (specifying as a second parameter that it doesn't)
+ * [FeatureFlagResult] (specifying as a second parameter that it doesn't)
  *
  * ```kotlin
  * val provider = FeatureFlagProvider { feature ->
  *     if (!/* check feature existence */) {
  *         // feature.value is the default provided value. We should also denote it doesn't exists.
- *         return FeatureFlagResult.create(feature.value, exists = false)
+ *         return FeatureFlagResult(feature.value, exists = false)
  *     }
  *
  *     // If the feature exists. return it from somewhere
- *     return FeatureFlagResult.create(/* get if the feature is enabled / disabled */)
+ *     return FeatureFlagResult(/* get if the feature is enabled / disabled */)
  * }
  * ```
  *
@@ -51,8 +51,8 @@ package com.saantiaguilera.featureflags
  *
  *         // Simple lookup of a map
  *         return flagsForUser.find { it.key == feature.key }
- *             ?.value?.let { FeatureFlagResult.create(it) }
- *             ?: FeatureFlagResult.create(feature.value, exists = false)
+ *             ?.value?.let { FeatureFlagResult(it) }
+ *             ?: FeatureFlagResult(feature.value, exists = false)
  *         }
  *     }
  * }
@@ -63,9 +63,8 @@ interface FeatureFlagProvider {
     /**
      * Provide for the given feature a result.
      *
-     * The result should denote if the feature is [Enabled][FeatureFlagResult.Enabled] or
-     * [Disabled][FeatureFlagResult.Disabled]. It should also represent if it was found or not
-     * through [FeatureFlagResult.exists].
+     * The result should denote if the feature is [enabled][FeatureFlagResult.enabled]. It should
+     * also represent if it was found or not through [FeatureFlagResult.exists].
      */
     fun provide(feature: FeatureFlag): FeatureFlagResult
 
