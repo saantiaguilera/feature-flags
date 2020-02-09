@@ -9,6 +9,7 @@ package com.saantiaguilera.featureflags
  *
  * Basic example
  * ```kotlin
+ * ```
  * val provider = FeatureFlagProvider { feature ->
  *     // check if the feature is enabled or not.
  * }
@@ -18,6 +19,7 @@ package com.saantiaguilera.featureflags
  * [FeatureFlagResult.create] (specifying as a second parameter that it doesn't)
  *
  * ```kotlin
+ * ```
  * val provider = FeatureFlagProvider { feature ->
  *     if (!/* check feature existence */) {
  *         // feature.value is the default provided value. We should also denote it doesn't exists.
@@ -38,7 +40,7 @@ package com.saantiaguilera.featureflags
  * that constructs with a "User" (or know how to retrieve it) and react from it.
  *
  * Example:
- * ```
+ * ```kotlin
  * class UserBasedProvider(
  *     private val userRepository: UserRepository,
  *     private val flagsRepository: MyFlagsRepository
@@ -74,7 +76,7 @@ interface FeatureFlagProvider {
          * Constructs a provider for a lambda. This compact syntax is most useful for inline
          * providers.
          *
-         * ```
+         * ```kotlin
          * val provider = FeatureFlagProvider { feature: FeatureFlag ->
          *     // Provide a result accordingly.
          * }

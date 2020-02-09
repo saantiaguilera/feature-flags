@@ -7,7 +7,7 @@
 Constructs a provider for a lambda. This compact syntax is most useful for inline
 providers.
 
-```
+``` kotlin
 val provider = FeatureFlagProvider { feature: FeatureFlag ->
     // Provide a result accordingly.
 }
