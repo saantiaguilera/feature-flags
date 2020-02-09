@@ -85,6 +85,7 @@ You can easily create other types such as:
 - SharedPreferences providers
 - Entity specific providers (eg. that depends on `User` or any DTO)
 - AB Testing providers
+- Free/Subscribed/Premium feature-flag provider (permission toggles)
 - Mock providers (for testing or debug builds)
 
 Since it's just a contract, you can create them with whatever you want to. You can even make them refreshable if you'd like (by creating a `Refreshable` interface and calling it whenever you want to)
