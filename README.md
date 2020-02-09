@@ -159,28 +159,6 @@ fun navigateHome(featureFlagProvider: FeatureFlagProvider) {
 }
 ```
 
-### Tech FAQ
-
-#### Why isn't a simple interface with isFeatureEnabled and hasFeature?
-
-Because we would need 2 accesses to the provider on any request (we want to **always** know first if 
-it exists). There are no specifications on how the provider should retrieve a flag, hence we want
-to make the least possible calls per request. The feature of knowing (optionally) if a flag exists
-at the provider can easily be achieved with a sealed-class or a `Boolean?`.
-
-On a side note, it looks more neat to just ask once for something.
-
-#### Why isn't just a `Boolean` or `Boolean?` the result, instead of a sealed class
-
-While seeing the requirements we saw that there were chances our servers didn't have a flag (because
-of developers mistakes or accessing different scopes). We wanted to know about these edge cases,
-but we couldn't do it if the result was a Boolean (what if `false` means it's actually `false`, and not
-missing?).
-
-Still, using a `Boolean?` would be a pain for those who don't care about missing flags. People should 
-always have to validate 3 cases (`null` / `false` / `true`) instead of two. Hence, a sealed class result 
-gives all these advantages (with the only downside of having to use results instead of plain booleans)  
-
 ### Mentions
 
 The API was heavily inspired by the following contents:
