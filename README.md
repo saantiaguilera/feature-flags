@@ -4,7 +4,7 @@
     <b>Feature Toggles (aka Feature Flags) in Kotlin</b>
 </p>
 
-![Build](https://github.com/saantiaguilera/feature-flags/workflows/CI/badge.svg) [![Coverage](https://codecov.io/gh/saantiaguilera/feature-flags/branch/master/graph/badge.svg)](https://codecov.io/gh/saantiaguilera/feature-flags)
+![Build](https://github.com/saantiaguilera/feature-flags/workflows/CI/badge.svg)
 
 This project is based completely on [Feature Toggles by Martin Fowler](https://martinfowler.com/articles/feature-toggles.html), it's available for any JVM environment
 
