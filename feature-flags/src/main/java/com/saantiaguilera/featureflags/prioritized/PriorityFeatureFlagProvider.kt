@@ -11,7 +11,7 @@ import com.saantiaguilera.featureflags.FeatureFlagResult
  * If all results are missing types, then the default feature value (missing) will be returned.
  *
  * Example of a basic multi-prioritized group using static integers for priorities:
- * ```
+ * ```kotlin
  *  // Simple wrapper class for creating providers with an int priority
  *  class StaticPriorityProvider(
  *      private val provider: FeatureFlagProvider,
@@ -32,17 +32,16 @@ import com.saantiaguilera.featureflags.FeatureFlagResult
  *      }
  *  }
  *
- *  // Usage:
+ *  // Usage with 2 providers (of course it can be N):
  *  fun using() {
  *      val provider = PriorityFeatureFlagProvider(
  *          listOf(
  *              StaticPriorityProvider(yourProviderOne, priorityProviderOne),
  *              StaticPriorityProvider(yourProviderTwo, priorityProviderTwo)
- *              /* ... */
  *          ),
  *          StaticPriorityComparator()
- *      }
- *  )
+ *      )
+ *  }
  * ```
  */
 class PriorityFeatureFlagProvider<P : FeatureFlagProvider>(

@@ -10,7 +10,7 @@ This definition is based on the [flag](https://golang.org/pkg/flag) package defi
 
 Example:
 
-```
+``` kotlin
 object PaymentsFeatureCatalog {
     val enableVisaPayments = FeatureFlag(
         "feature.payments.cards.visa",

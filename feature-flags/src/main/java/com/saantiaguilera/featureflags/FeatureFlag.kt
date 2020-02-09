@@ -8,7 +8,7 @@ import java.io.Serializable
  * This definition is based on the [flag](https://golang.org/pkg/flag) package definition.
  *
  * Example:
- * ```
+ * ```kotlin
  * object PaymentsFeatureCatalog {
  *     val enableVisaPayments = FeatureFlag(
  *         "feature.payments.cards.visa",

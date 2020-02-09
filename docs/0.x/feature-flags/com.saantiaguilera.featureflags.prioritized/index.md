@@ -2,6 +2,8 @@
 
 ## Package com.saantiaguilera.featureflags.prioritized
 
+Priority public API package. Elements that allow prioritized behaviours reside here
+
 ### Types
 
 | Name | Summary |

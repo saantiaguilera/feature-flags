@@ -6,8 +6,8 @@ A Feature Toggle (aka Feature Flags) Kotlin implementation
 
 | Name | Summary |
 |---|---|
-| [com.saantiaguilera.featureflags](com.saantiaguilera.featureflags/index.md) |  |
-| [com.saantiaguilera.featureflags.prioritized](com.saantiaguilera.featureflags.prioritized/index.md) |  |
+| [com.saantiaguilera.featureflags](com.saantiaguilera.featureflags/index.md) | General public API package. All the core elements reside here |
+| [com.saantiaguilera.featureflags.prioritized](com.saantiaguilera.featureflags.prioritized/index.md) | Priority public API package. Elements that allow prioritized behaviours reside here |
 
 ### Index
 

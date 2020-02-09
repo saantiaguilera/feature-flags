@@ -2,6 +2,8 @@
 
 ## Package com.saantiaguilera.featureflags
 
+General public API package. All the core elements reside here
+
 ### Types
 
 | Name | Summary |
