@@ -8,7 +8,7 @@ package com.saantiaguilera.featureflags
  * the state of a flag, it's ok.
  *
  * Basic example
- * ```
+ * ```kotlin
  * val provider = FeatureFlagProvider { feature ->
  *     // check if the feature is enabled or not.
  * }
@@ -17,7 +17,7 @@ package com.saantiaguilera.featureflags
  * If a provider doesn't have the requested feature, it should respond with a missing one using
  * [FeatureFlagResult.create] (specifying as a second parameter that it doesn't)
  *
- * ```
+ * ```kotlin
  * val provider = FeatureFlagProvider { feature ->
  *     if (!/* check feature existence */) {
  *         // feature.value is the default provided value. We should also denote it doesn't exists.
@@ -26,6 +26,7 @@ package com.saantiaguilera.featureflags
  *
  *     // If the feature exists. return it from somewhere
  *     return FeatureFlagResult.create(/* get if the feature is enabled / disabled */)
+ * }
  * ```
  *
  * On a more complex situation, you can create multi-providers such as

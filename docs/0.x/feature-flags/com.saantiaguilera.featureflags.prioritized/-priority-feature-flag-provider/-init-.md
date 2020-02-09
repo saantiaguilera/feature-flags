@@ -11,7 +11,7 @@ If all results are missing types, then the default feature value (missing) will 
 
 Example of a basic multi-prioritized group using static integers for priorities:
 
-```
+``` kotlin
 // Simple wrapper class for creating providers with an int priority
 class StaticPriorityProvider(
     private val provider: FeatureFlagProvider,
